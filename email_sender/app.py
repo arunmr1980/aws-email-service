@@ -15,10 +15,8 @@ def lambda_handler_sqs(event, context):
     message = event
 
     try:
-        body = message['body']
+        body = message['Body']
         payload = json.loads(body)
-        eslogger.info("payload :-")
-        eslogger.info(payload)
         response = email_sender.send_email(payload)
         queue_util.delete_message(message)
     except ClientError as e:

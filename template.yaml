@@ -17,14 +17,17 @@ Resources:
     Properties:
       DefinitionUri: statemachine/emailsender.asl.json
       DefinitionSubstitutions:
-        EmailSenderFunctionArn: !GetAtt EmailSenderQueueFunction.Arn
+        EmailSenderFunctionArn: !GetAtt EmailSenderFunction.Arn
         CounterFunctionArn: !GetAtt CounterFunction.Arn
-      Type: EXPRESS
+        QueueReaderFunctionArn: !GetAtt QueueReaderFunction.Arn
+      Type: STANDARD
       Policies:
         - LambdaInvokePolicy:
-            FunctionName: !Ref EmailSenderQueueFunction
+            FunctionName: !Ref EmailSenderFunction
         - LambdaInvokePolicy:
             FunctionName: !Ref CounterFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref QueueReaderFunction
       Events:
         EmailSendingSchedule:
           Type: Schedule
@@ -41,7 +44,21 @@ Resources:
       Runtime: python3.9
 
 
-  EmailSenderQueueFunction:
+  QueueReaderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: queue_reader/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Policies:
+        - AWSLambdaSQSQueueExecutionRole
+      Environment:
+        Variables:
+          EMAIL_SQS_QUEUE_URL: !Ref EmailSqsQueue
+          EMAIL_MAX_NUMBER_OF_MESSAGES: 5
+
+
+  EmailSenderFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: email_sender/
@@ -98,7 +115,7 @@ Resources:
   EmailSNSTopic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: "EmailSNSTopicEB.fifo"
+      TopicName: "EmailSNSTopicEB2.fifo"
       ContentBasedDeduplication: true
       FifoTopic: true
 
