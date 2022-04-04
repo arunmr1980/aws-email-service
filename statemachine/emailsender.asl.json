@@ -29,7 +29,7 @@
         {
           "Variable":"$.iteration_count",
           "NumericEquals": 1,
-          "Next": "Poll SQS Send Emails"
+          "Next": "Get Messages from SQS"
         },
         {
           "Variable":"$.iteration_count",
@@ -40,13 +40,13 @@
       "Default": "Wait Some Time"
     },
 
-    "Poll SQS Send Emails": {
+    "Get Messages from SQS": {
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "${EmailSenderFunctionArn}"
+        "FunctionName": "${QueueReaderFunctionArn}"
       },
       "Retry": [
         {
@@ -60,13 +60,48 @@
           "BackoffRate": 2
         }
       ],
-      "Next": "Count Execution"
+      "Next": "Process SQS Messages"
+    },
+
+
+    "Process SQS Messages": {
+      "Type": "Map",
+      "ItemsPath": "$.messages",
+      "ResultPath": "$.messages",
+      "Iterator":{
+        "StartAt": "SendEmail",
+        "States":{
+          "SendEmail":{
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "OutputPath": "$.Payload",
+            "Parameters":{
+              "Payload.$": "$",
+              "FunctionName": "${EmailSenderFunctionArn}"
+            },
+            "Retry": [
+              {
+                "ErrorEquals": [
+                  "Lambda.ServiceException",
+                  "Lambda.AWSLambdaException",
+                  "Lambda.SdkClientException"
+                ],
+                "IntervalSeconds": 2,
+                "MaxAttempts": 3,
+                "BackoffRate": 2
+              }
+            ],
+            "End": true
+          }
+        }
+      },
+      "Next": "Count Execution",
     },
 
     "Wait Some Time":{
       "Type": "Wait",
       "Seconds": 5,
-      "Next": "Poll SQS Send Emails"
+      "Next": "Get Messages from SQS"
     },
 
     "Finish": {
