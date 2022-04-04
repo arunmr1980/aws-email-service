@@ -1,0 +1,7 @@
+{
+  "MessageId": "d4f856df-0781-4aef-afef-8b35e8ace93a",
+  "ReceiptHandle": "AQ9JpW7jXBXzdbBD1haSfLobPSFpe8ng6qo8FJmSeiD3n1fSjXpHrA==",
+  "MD5OfBody": "527eceea83f982039e94e80f08c02901",
+  "Body": "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addresses\": [\"strider.galaxies@gmail.com\",\"merry.arun@gmail.com\"],\"title\": \"[2] fpktluvhbn Email Service Test\",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}",
+  "Attributes": {"SentTimestamp": "1649055516878"}
+}

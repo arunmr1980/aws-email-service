@@ -2,7 +2,7 @@
 
 {
   "from": "arun_mr549e@protonmail.com",
-  "to_addesses": ["merry.arun@gmail.com", "strider.galaxies@gmail.com"],
+  "to_addresses": ["merry.arun@gmail.com", "strider.galaxies@gmail.com"],
   "title": "Email Service Test [SNS Trigger]",
   "body_html": "<p>Blah Blah</p>",
   "body_text": "Blah Blah"
