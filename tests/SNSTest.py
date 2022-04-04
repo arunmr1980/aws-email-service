@@ -22,11 +22,11 @@ def send_email(email_text):
 def test_emails():
     index = 0
 
-    while index < 1:
+    while index < 2:
         random_str = get_random_string()
         index = index + 1
         email_text = "{\"from\": \"arun_mr549e@protonmail.com\","
-        email_text = email_text + "\"to_addesses\": [\"strider.galaxies@gmail.com\",\"merry.arun@gmail.com\"],"
+        email_text = email_text + "\"to_addresses\": [\"strider.galaxies@gmail.com\",\"merry.arun@gmail.com\"],"
         email_text = email_text + "\"title\": \"[" + str(index) + "] " + random_str + " Email Service Test\""
         email_text = email_text + ",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}"
         send_email(email_text)
