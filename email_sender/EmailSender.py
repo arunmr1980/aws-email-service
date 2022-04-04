@@ -15,7 +15,7 @@ def send_email(email_dict):
     try:
         response = client.send_email(
             Destination={
-                'ToAddresses': email_dict["to_addesses"],
+                'ToAddresses': email_dict["to_addresses"],
             },
             Message={
                 'Body': {
