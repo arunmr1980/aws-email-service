@@ -25,12 +25,3 @@ def get_messages():
     if 'Messages' in response:
         messages = response['Messages']
     return messages
-
-
-def delete_message(message):
-    receipt_handle = message['ReceiptHandle']
-    sqs.delete_message(
-        QueueUrl=queue_url,
-        ReceiptHandle=receipt_handle
-    )
-    eslogger.info('Received and deleted message: %s' % message['MessageId'])

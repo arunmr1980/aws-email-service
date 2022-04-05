@@ -20,7 +20,7 @@ Resources:
         EmailSenderFunctionArn: !GetAtt EmailSenderFunction.Arn
         CounterFunctionArn: !GetAtt CounterFunction.Arn
         QueueReaderFunctionArn: !GetAtt QueueReaderFunction.Arn
-      Type: STANDARD
+      Type: EXPRESS
       Policies:
         - LambdaInvokePolicy:
             FunctionName: !Ref EmailSenderFunction
