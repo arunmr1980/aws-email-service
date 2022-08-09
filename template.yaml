@@ -5,26 +5,11 @@ Description: >
 
   Sample SAM Template for email-service
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 15
 
 Resources:
-#   EmailSenderFunction:
-#     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-#     Properties:
-#       CodeUri: email_sender/
-#       Handler: app.lambda_handler_sqs
-#       Runtime: python3.9
-#       Architectures:
-#         - x86_64
-#       Events:
-#         EmailSender:
-#           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-#           Properties:
-#             Path: /hello
-#             Method: get
 
   EmailSenderQueueFunction:
     Type: AWS::Serverless::Function
@@ -40,9 +25,9 @@ Resources:
           Properties:
             Queue: !GetAtt EmailSqsQueue.Arn
             BatchSize: 10
-            MaximumBatchingWindowInSeconds: 10
             FunctionResponseTypes:
               - ReportBatchItemFailures
+
 
   EmailSqsQueue:
     Type: AWS::SQS::Queue
@@ -52,6 +37,7 @@ Resources:
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt EmailSqsDLQ.Arn
         maxReceiveCount: 5
+
 
   EmailSqsQueuePolicy:
     Type: AWS::SQS::QueuePolicy
@@ -74,10 +60,12 @@ Resources:
       Queues:
         - Ref: EmailSqsQueue
 
+
   EmailSqsDLQ:
     Type: AWS::SQS::Queue
     Properties:
       FifoQueue: true
+
 
   EmailSNSTopic:
     Type: AWS::SNS::Topic
@@ -85,6 +73,7 @@ Resources:
       TopicName: "EmailSNSTopic.fifo"
       ContentBasedDeduplication: true
       FifoTopic: true
+
 
   EmailQueueToSnsSubscription:
     Type: AWS::SNS::Subscription
