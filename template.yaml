@@ -11,14 +11,12 @@ Globals:
 
 Resources:
 
-  EmailSenderQueueFunction:
+  QueueReaderFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: email_sender/
-      Handler: app.lambda_handler_sqs
+      CodeUri: functions/queue_reader/
+      Handler: app.queue_reader_lambda
       Runtime: python3.9
-      Policies:
-        - AmazonSESFullAccess
       Events:
         EmailSQSEvent:
           Type: SQS
@@ -27,6 +25,24 @@ Resources:
             BatchSize: 10
             FunctionResponseTypes:
               - ReportBatchItemFailures
+
+
+  EmailSenderQueueFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: email_sender/
+      Handler: app.lambda_handler_sqs
+      Runtime: python3.9
+      Policies:
+        - AmazonSESFullAccess
+      # Events:
+      #   EmailSQSEvent:
+      #     Type: SQS
+      #     Properties:
+      #       Queue: !GetAtt EmailSqsQueue.Arn
+      #       BatchSize: 10
+      #       FunctionResponseTypes:
+      #         - ReportBatchItemFailures
 
 
   EmailSqsQueue:
