@@ -27,11 +27,23 @@ Resources:
               - ReportBatchItemFailures
 
 
+  EmailProcessingStateMachine:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      DefinitionUri: statemachine/emailprocessor.asl.json
+      DefinitionSubstitutions:
+        EmailSenderFunctionArn: !GetAtt EmailSenderFunction.Arn
+      Type: STANDARD
+      Policies:
+        - LambdaInvokePolicy: 
+            FunctionName: !Ref EmailSenderFunction
+
+
   EmailSenderFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: functions/email_sender/
-      Handler: app.email_sender_lambda
+      Handler: app.email_sender_lambda.handle_event
       Runtime: python3.9
       Policies:
         - AmazonSESFullAccess
