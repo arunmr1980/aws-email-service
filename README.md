@@ -6,6 +6,9 @@ Build application
 Test locally
 > sam local invoke EmailSenderFunction --event events/event.json
 
+Unit Test
+> python3 -m unittest discover
+
 Deploy to AWS
 > sam deploy
 

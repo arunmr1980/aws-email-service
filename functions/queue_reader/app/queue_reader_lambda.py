@@ -1,6 +1,5 @@
 import json
 
-# import EmailSender as email_sender
 from . import ESLogger as eslogger
 from botocore.exceptions import ClientError
 
@@ -17,10 +16,6 @@ def handle_event(event, context):
         eslogger.info("Body of Message ----" + record['messageId'])
         eslogger.info(record["body"])
         payload = json.loads(record["body"])
-        # try:
-        #     response = email_sender.send_email(payload)
-        # except ClientError as e:
-        #     failed_messages.append(record)
 
     response = get_response(failed_messages, batchSize)
     eslogger.info("Response :- ")

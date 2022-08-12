@@ -1,0 +1,24 @@
+{
+    "Comment": "Email processing state machine",
+    "StartAt": "Init",
+    "States": {
+        "Init":{
+            "Type": "Pass",
+            "ResultPath": "$",
+            "Next": "Send Email"
+        },
+        "Send Email":{
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "OutputPath": "$",
+            "Parameters": {
+                "FunctionName": "${EmailSenderFunctionArn}"
+            },
+            "Next": "Finish"
+        },
+        "Finish":{
+            "Type": "Pass",
+            "End": true
+        }
+    }
+}

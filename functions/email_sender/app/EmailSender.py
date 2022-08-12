@@ -1,7 +1,7 @@
 
 import boto3
 import json
-import ESLogger as eslogger
+from . import ESLogger as eslogger
 from botocore.exceptions import ClientError
 
 

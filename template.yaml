@@ -27,22 +27,14 @@ Resources:
               - ReportBatchItemFailures
 
 
-  EmailSenderQueueFunction:
+  EmailSenderFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: email_sender/
-      Handler: app.lambda_handler_sqs
+      CodeUri: functions/email_sender/
+      Handler: app.email_sender_lambda
       Runtime: python3.9
       Policies:
         - AmazonSESFullAccess
-      # Events:
-      #   EmailSQSEvent:
-      #     Type: SQS
-      #     Properties:
-      #       Queue: !GetAtt EmailSqsQueue.Arn
-      #       BatchSize: 10
-      #       FunctionResponseTypes:
-      #         - ReportBatchItemFailures
 
 
   EmailSqsQueue:
