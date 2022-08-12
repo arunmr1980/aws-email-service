@@ -4,7 +4,6 @@
     "States": {
         "Init":{
             "Type": "Pass",
-            "ResultPath": "$",
             "Next": "Send Email"
         },
         "Send Email":{
@@ -12,6 +11,7 @@
             "Resource": "arn:aws:states:::lambda:invoke",
             "OutputPath": "$",
             "Parameters": {
+                "Payload.$": "$",
                 "FunctionName": "${EmailSenderFunctionArn}"
             },
             "Next": "Finish"

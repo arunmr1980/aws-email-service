@@ -3,7 +3,7 @@ import logging
 # Lambda logging config
 logger = logging.getLogger()
 
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 def info(msg):

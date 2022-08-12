@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   email-service
 
-  Sample SAM Template for email-service
+  SAM Template for email-service
 
 Globals:
   Function:
@@ -15,8 +15,13 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: functions/queue_reader/
-      Handler: app.queue_reader_lambda
+      Handler: app.queue_reader_lambda.handle_event
       Runtime: python3.9
+      Policies:
+        - AWSStepFunctionsFullAccess
+      Environment:
+        Variables:
+          EMAIL_PROCESSOR_STATE_MACHINE_ARN: !GetAtt EmailProcessingStateMachine.Arn
       Events:
         EmailSQSEvent:
           Type: SQS
@@ -25,7 +30,7 @@ Resources:
             BatchSize: 10
             FunctionResponseTypes:
               - ReportBatchItemFailures
-
+            
 
   EmailProcessingStateMachine:
     Type: AWS::Serverless::StateMachine
