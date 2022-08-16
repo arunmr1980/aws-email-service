@@ -1,3 +1,8 @@
+## Architecture Diagram
+
+![Email Service - Architecture drawio](https://user-images.githubusercontent.com/19325896/184797164-f3b3f09d-eb74-4808-a36f-eee3089671b9.png)
+
+
 ## Quick reference
 
 Build application
