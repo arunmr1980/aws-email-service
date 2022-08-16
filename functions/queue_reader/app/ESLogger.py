@@ -6,13 +6,11 @@ logger = logging.getLogger()
 # Comment out the below section for lambda deployment
 
 #--- Start section
-
-logger = logging.getLogger('email-sender')
-hdlr = logging.FileHandler('emailsender.log')
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-hdlr.setFormatter(formatter)
-logger.addHandler(hdlr)
-
+# logger = logging.getLogger('email-sender')
+# hdlr = logging.FileHandler('emailsender.log')
+# formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+# hdlr.setFormatter(formatter)
+# logger.addHandler(hdlr)
 #--- End Section
 
 logger.setLevel(logging.DEBUG)

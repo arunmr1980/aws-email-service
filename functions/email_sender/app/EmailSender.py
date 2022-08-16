@@ -1,6 +1,7 @@
 
 import boto3
 import json
+import copy
 from . import ESLogger as eslogger
 from botocore.exceptions import ClientError
 
@@ -8,6 +9,17 @@ from botocore.exceptions import ClientError
 CHARSET = "UTF-8"
 
 client = boto3.client('ses')
+
+"""Emails are sent one id at a time to avoid failure for all emails if one id is wrong"""
+def send_email_individually(email_dict):
+    responses = []
+    for to_address in email_dict["to_addresses"]:
+        email_dict2 = copy.deepcopy(email_dict)
+        email_dict2["to_addresses"] = [to_address]
+        responses.append(send_email(email_dict2))
+
+    return responses
+
 
 def send_email(email_dict):
     try:
@@ -42,9 +54,7 @@ def send_email(email_dict):
         eslogger.error("Error from SES ----")
         eslogger.error(e.response)
         eslogger.error(e.response['Error']['Message'])
-        """ Raise error so upstream services like SQS can retry """
-        raise e
-        # return get_error_response(e.response)
+        return get_error_response(e.response)
     else:
         eslogger.info("Email sent! Message ID:"),
         eslogger.info(response['MessageId'])
@@ -57,7 +67,6 @@ def get_success_response(ses_response):
         "body": json.dumps({
             "message": "success",
             "messageId": ses_response['MessageId']
-            # "location": ip.text.replace("\n", "")
         }),
     }
     return response
