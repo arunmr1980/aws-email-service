@@ -1,0 +1,18 @@
+{
+    "from": "arun_mr549e@protonmail.com",
+    "to_addresses": ["merry.arun@gmail.com", "strider.galaxies@gmail.com", "arun.mr@hiddeninsight.in"],
+    "title": "Email Service Test [SNS Trigger] HI",
+    "body_html": "<p>Blah Blah</p>",
+    "body_text": "Blah Blah",
+    "attachments":[
+      {
+        "name": "Bob's picture",
+        "file_key": "gggjgjhgjhgj"
+      },
+      {
+        "name": "Susie's Story",
+        "file_key": "hsddshghgsdghg"
+      }
+    ]
+  }
+  
