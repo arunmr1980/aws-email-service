@@ -53,6 +53,11 @@ Resources:
       Policies:
         - AmazonSESFullAccess
 
+  AttachmentsBucket:
+    Type: AWS::S3:Bucket
+    Properties:
+      BucketName: EmailAppAttachments
+
 
   EmailSqsQueue:
     Type: AWS::SQS::Queue
