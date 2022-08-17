@@ -2,6 +2,11 @@
 
 ![Email Service - Architecture drawio](https://user-images.githubusercontent.com/19325896/184797164-f3b3f09d-eb74-4808-a36f-eee3089671b9.png)
 
+## Features
+
+- Sends emails in a batch
+- Support multiple attachments
+- Sends emails even if one or more emails fail. It does not block the entire batch
 
 ## Quick reference
 
