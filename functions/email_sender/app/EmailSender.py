@@ -54,14 +54,8 @@ def send_email_with_attachments(email_dict, attachment_files):
     msg_body.attach(text_part)
     msg_body.attach(html_part)
 
-    attachment_file = attachment_files[0]
-    attachment = MIMEApplication(attachment_file.read())
-    # Add a header to tell the email client to treat this part as an attachment,
-    # and to give the attachment a name.
-    attachment.add_header('Content-Disposition','attachment',filename='duck.png')
-
     msg.attach(msg_body)
-    msg.attach(attachment)
+    add_attachments(attachment_files,msg)
 
     try:
         response = client.send_raw_email(
@@ -82,6 +76,14 @@ def send_email_with_attachments(email_dict, attachment_files):
         eslogger.info(response['MessageId'])
         return get_success_response(response)
 
+
+def add_attachments(attachment_files, message):
+    for attachment_file in attachment_files:
+        attachment = MIMEApplication(attachment_file.read())
+        # Add a header to tell the email client to treat this part as an attachment,
+        # and to give the attachment a name.
+        attachment.add_header('Content-Disposition','attachment',filename='duck.png')
+        message.attach(attachment)
 
 
 def send_email(email_dict):

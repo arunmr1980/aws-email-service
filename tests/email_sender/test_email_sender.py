@@ -23,6 +23,8 @@ class EmailAttachemntSenderTest(unittest.TestCase):
         attachments = []
         att1 = open(self.fixture_path + '/duck.png','rb')
         attachments.append(att1)
+        att2 = open(self.fixture_path + '/random.jpg','rb')
+        attachments.append(att2)
         return attachments
 
 
