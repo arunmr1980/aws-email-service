@@ -3,8 +3,19 @@ import json
 
 import functions.email_sender.app.email_sender_lambda as email_sender
 
-class EmailSenderTest(unittest.TestCase):
+class EmailSenderLambdaTest(unittest.TestCase):
 
+    """Successful email sending with attachment"""
+    def test_email_sender_success_with_attachment(self):
+        sender_event = self.get_success_event_with_attachment()
+        context = None
+
+        responses = email_sender.handle_event(sender_event, context)
+        for response in responses:
+            self.assertEqual(200, response['statusCode'])
+
+
+    """Successful email sending"""
     def test_email_sender_success(self):
         sender_event = self.get_success_event()
         context = None
@@ -50,6 +61,10 @@ class EmailSenderTest(unittest.TestCase):
 
     def get_partial_failure_event(self):
         return self.get_event('events/event_email_sender_fn_partial_fail.json')
+    
+
+    def get_success_event_with_attachment(self):
+        return self.get_event('events/event_email_sender_fn_attachment.json')
         
 
     def get_event(self, file_name) :
