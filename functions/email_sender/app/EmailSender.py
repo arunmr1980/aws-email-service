@@ -3,6 +3,7 @@ import boto3
 import json
 import copy
 from . import ESLogger as eslogger
+from . import S3FileReader as file_reader
 from botocore.exceptions import ClientError
 
 from email.mime.multipart import MIMEMultipart
@@ -19,14 +20,26 @@ def send_email_individually(email_dict):
     responses = []
 
     has_attachment = False
+    attachment_files = []
     if "attachments" in email_dict and len(email_dict["attachments"]) > 0:
         has_attachment = True
+        for attachment in email_dict["attachments"]:
+            folder_name = email_dict["partner_key"]
+            file_name = attachment["file_key"]
+            # TODO Catch error condition when file could not be loaded
+            attch_file_content = file_reader.get_attachment_file_as_binary(folder_name, file_name)
+            attch = {
+                        'name': attachment['name'],
+                        'file': attch_file_content
+                    }
+            attachment_files.append(attch)
+
 
     for to_address in email_dict["to_addresses"]:
         email_dict2 = copy.deepcopy(email_dict)
         email_dict2["to_addresses"] = [to_address]
         if has_attachment:
-            responses.append(send_email_with_attachments(email_dict2))
+            responses.append(send_email_with_attachments(email_dict2, attachment_files))
         else:
             responses.append(send_email(email_dict2))
 
@@ -79,11 +92,11 @@ def send_email_with_attachments(email_dict, attachment_files):
 
 def add_attachments(attachment_files, message):
     for attachment_file in attachment_files:
-        attachment = MIMEApplication(attachment_file.read())
+        mime_attachment = MIMEApplication(attachment_file['file'])
         # Add a header to tell the email client to treat this part as an attachment,
         # and to give the attachment a name.
-        attachment.add_header('Content-Disposition','attachment',filename='duck.png')
-        message.attach(attachment)
+        mime_attachment.add_header('Content-Disposition','attachment',filename=attachment_file['name'])
+        message.attach(mime_attachment)
 
 
 def send_email(email_dict):

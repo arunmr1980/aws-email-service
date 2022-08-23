@@ -15,15 +15,25 @@ class EmailAttachemntSenderTest(unittest.TestCase):
         self.assertEqual(200, response['statusCode'])
 
     
+    def test_email_sender_success_attachments_s3(self):
+        email_request = self.get_email_request()
+
+        responses = email_sender.send_email_individually(email_request)
+        for response in responses:
+            self.assertEqual(200, response['statusCode'])
+
+    
     def get_email_request(self):
         return self.get_file_as_dict(self.fixture_path + '/email_request.json')
 
 
     def get_attachments(self):
         attachments = []
-        att1 = open(self.fixture_path + '/duck.png','rb')
+        file1 = open(self.fixture_path + '/duck.png','rb')
+        att1 = {'name':'duck.png','file':file1.read()}
         attachments.append(att1)
-        att2 = open(self.fixture_path + '/random.jpg','rb')
+        file2 = open(self.fixture_path + '/random.jpg','rb')
+        att2 = {'name':'elephant.png','file':file2.read()}
         attachments.append(att2)
         return attachments
 

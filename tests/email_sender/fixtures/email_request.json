@@ -1,17 +1,18 @@
 {
+    "partner_key": "hiddeninsight",
     "from": "arun_mr549e@protonmail.com",
     "to_addresses": ["merry.arun@gmail.com", "strider.galaxies@gmail.com", "arun.mr@hiddeninsight.in"],
-    "title": "Email Service Test [SNS Trigger] HI",
+    "title": "Email Service Test [Unit Test] HI",
     "body_html": "<p>Blah Blah</p>",
     "body_text": "Blah Blah",
     "attachments":[
       {
-        "name": "Bob's picture",
-        "file_key": "gggjgjhgjhgj"
+        "name": "Bob.jpg",
+        "file_key": "boy4.jpg"
       },
       {
-        "name": "Susie's Story",
-        "file_key": "hsddshghgsdghg"
+        "name": "Susie.jpg",
+        "file_key": "girl1.jpg"
       }
     ]
   }
