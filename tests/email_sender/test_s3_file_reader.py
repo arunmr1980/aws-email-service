@@ -16,7 +16,7 @@ class FileReaderTest(unittest.TestCase):
         self.write_file(file_content)
 
     def write_file(self,file):
-        dest_file = open(self.fixture_path+'/testfile.jpg','wb')
+        dest_file = open('/tmp/testfile.jpg','wb')
         dest_file.write(file)
         dest_file.close()
 
