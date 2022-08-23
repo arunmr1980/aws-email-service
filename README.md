@@ -8,6 +8,11 @@
 - Support multiple attachments
 - Sends emails even if one or more emails fail. It does not block the entire batch
 
+## Service Limits
+
+- Maximum number of attachments - 5
+- Maximum attachment size - 5 MB
+
 ## Quick reference
 
 Build application
