@@ -2,6 +2,8 @@
 import boto3
 import json
 import copy
+from http import HTTPStatus
+
 from . import ESLogger as eslogger
 from . import S3FileReader as file_reader
 from botocore.exceptions import ClientError
@@ -26,13 +28,20 @@ def send_email_individually(email_dict):
         for attachment in email_dict["attachments"]:
             folder_name = email_dict["partner_key"]
             file_name = attachment["file_key"]
-            # TODO Catch error condition when file could not be loaded
-            attch_file_content = file_reader.get_attachment_file_as_binary(folder_name, file_name)
-            attch = {
-                        'name': attachment['name'],
-                        'file': attch_file_content
-                    }
-            attachment_files.append(attch)
+            
+            # Catch error condition when file could not be loaded
+            try:
+                attch_file_content = file_reader.get_attachment_file_as_binary(folder_name, file_name)
+                attch = {
+                            'name': attachment['name'],
+                            'file': attch_file_content
+                        }
+                attachment_files.append(attch)
+            except:
+                eslogger.error('Attachments could not be loaded')
+                response = get_internal_server_error_response({'code':'ATTCH_FAIL','message':'Attachments could not be loaded'})
+                responses.append(response)
+                return responses
 
 
     for to_address in email_dict["to_addresses"]:
@@ -149,6 +158,7 @@ def get_success_response(ses_response):
     }
     return response
 
+
 def get_error_response(ses_response):
     response = {
         "statusCode": ses_response['ResponseMetadata']['HTTPStatusCode'],
@@ -156,6 +166,17 @@ def get_error_response(ses_response):
             "message": ses_response['Error']['Message'],
             "code": ses_response['Error']['Code'],
             "type": ses_response['Error']['Type']
+        }),
+    }
+    return response
+
+
+def get_internal_server_error_response(response):
+    response = {
+        "statusCode": HTTPStatus.INTERNAL_SERVER_ERROR,
+        "body": json.dumps({
+            "message": response['message'],
+            "code": response['code'],
         }),
     }
     return response

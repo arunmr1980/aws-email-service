@@ -19,5 +19,6 @@ def get_attachment_file_as_binary(folder_name, file_name):
             return content
         except:
             eslogger.error('Error while loading file from S3')
+            raise
 
 

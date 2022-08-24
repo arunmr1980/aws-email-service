@@ -1,0 +1,20 @@
+
+
+{
+  "partner_key": "hiddeninsight",
+  "from": "arun_mr549e@protonmail.com",
+  "to_addresses": ["merry.arun@gmail.com", "strider.galaxies@gmail.com", "arun.mr@hiddeninsight.in"],
+  "title": "Email Service Test [Attachment Test from Lambda] HI",
+  "body_html": "<p>Blah Blah</p>",
+  "body_text": "Blah Blah",
+  "attachments":[
+    {
+      "name": "bob.jpg",
+      "file_key": "boy4jhjghjgbj.jpg"
+    },
+    {
+      "name": "susie.jpg",
+      "file_key": "girl1kjhjkhkj.jpg"
+    }
+  ]
+}
