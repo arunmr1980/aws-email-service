@@ -1,0 +1,14 @@
+
+{
+	"name": "HiddenInsight",
+	"partner_key":"hiddeninsight-key-9643",
+	"s3_bucket_name": "email-app-attachmentsbucket-5c4l0y3hobmw",
+	"s3_folder_name": "hiddeninsight",
+	"clients": [
+		{
+			"name": "mountlitera",
+			"client_key": "mountlitera-key-1238",
+			"s3_folder_name": "mountlitera"
+		}
+	]
+}
