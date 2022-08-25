@@ -2,8 +2,9 @@
 
 {
   "partner_key": "hiddeninsight",
+  "client_key": "mountlitera", 
   "from": "arun_mr549e@protonmail.com",
-  "to_addresses": ["merry.arun@gmail.com", "strider.galaxies@gmail.com", "arun.mr@hiddeninsight.in"],
+  "to_addresses": [{"email":"merry.arun@gmail.com"}, {"email":"strider.galaxies@gmail.com"}, {"email":"arun.mr@hiddeninsight.in"}],
   "title": "Email Service Test [Attachment Test from Lambda] HI",
   "body_html": "<p>Blah Blah</p>",
   "body_text": "Blah Blah",

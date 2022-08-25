@@ -2,6 +2,7 @@
 
 {
   "from": "arun_mr549e@protonmail.com",
+  "to_addresses": [{"email":"merry.arun@349ireijgmail.com"}, {"email":"strider.galaxies@gertertmail.com"}, {"email":"arun.mr@hiddeni43534r3nsight.in"}],
   "to_addresses": ["merry.arun@gma4r4ril.com", "strider.galaxies@gm789air4l.com", "arun.mr@hiddenif455nsight.in"],
   "title": "Email Service Test [SNS Trigger] HI",
   "body_html": "<p>Blah Blah</p>",

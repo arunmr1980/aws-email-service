@@ -3,7 +3,7 @@
   "MessageId" : "11466a77-24b6-5a9d-bf59-30ee6529097e",
   "TopicArn" : "arn:aws:sns:us-east-2:107569227309:email-sender-app-EmailSNSTopic-DFR2U2JODGXU",
   "Subject" : "Testings sns",
-  "Message" : "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [\"merry.arun@gmail.com\", \"strider.galaxies@gmail.com\"],\"title\": \"Remaining time of Event is Changed\",\"body_html\": \"<p>Blah Blah</p>\",\"body_text\": \"Blah Blah\"}",
+  "Message" : "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [{\"email\":\"merry.arun@gmail.com\"}, {\"email\":\"strider.galaxies@gmail.com\"}],\"title\": \"Remaining time of Event is Changed\",\"body_html\": \"<p>Blah Blah</p>\",\"body_text\": \"Blah Blah\"}",
   "Timestamp" : "2022-03-02T09:56:47.658Z",
   "SignatureVersion" : "1",
   "Signature" : "70ig==",

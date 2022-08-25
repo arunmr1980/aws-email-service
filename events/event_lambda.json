@@ -3,7 +3,7 @@
     {
       "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb78",
       "receiptHandle": "MessageReceiptHandle",
-      "body": "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [\"strider.galaxies@gmail.com\",\"merry.arun@gmail.com\"],\"title\": \"Email Service Test One [Lambda Trigger] \",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}",
+      "body": "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [{\"email\":\"strider.galaxies@gmail.com\"},{\"email\":\"merry.arun@gmail.com\"}],\"title\": \"Email Service Test One [Lambda Trigger] \",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}",
       "attributes": {
         "ApproximateReceiveCount": "1",
         "SentTimestamp": "1523232000000",
@@ -19,7 +19,7 @@
     {
       "messageId": "98765432-b21e-4ac1-bd88-667866876ytyu",
       "receiptHandle": "MessageReceiptHandle",
-      "body": "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [\"stride.galaxies@gmail.com\",\"merry.arun@gmail.com\"],\"title\": \"Email Service Test Two [Lambda Trigger]\",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}",
+      "body": "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [{\"email\":\"strider.galaxies@gmail.com\"},{\"email\":\"merry.arun@gmail.com\"}],\"title\": \"Email Service Test Two [Lambda Trigger] \",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}",
       "attributes": {
         "ApproximateReceiveCount": "1",
         "SentTimestamp": "1523232000000",
@@ -35,7 +35,7 @@
     {
       "messageId": "gygfwe67-b21e-4ac1-bd88-98hdhubud",
       "receiptHandle": "MessageReceiptHandle",
-      "body": "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [\"strider.galaxies@gmail.com\",\"merry.arun@gmail.com\"],\"title\": \"Email Service Test Three [Lambda Trigger]\",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}",
+      "body": "{\"from\": \"arun_mr549e@protonmail.com\",\"to_addesses\": [{\"email\":\"strider.galaxies@gmail.com\"},{\"email\":\"merry.arun@gmail.com\"}],\"title\": \"Email Service Test Three [Lambda Trigger] \",\"body_html\": \"<p>Test 3</p>\",\"body_text\": \"Blah Blah\"}",
       "attributes": {
         "ApproximateReceiveCount": "1",
         "SentTimestamp": "1523232000000",
