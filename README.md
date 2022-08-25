@@ -13,6 +13,11 @@
 - Maximum number of attachments - 5
 - Maximum attachment size - 5 MB
 
+## Configurations
+
+- S3 Bucket name
+- Json config file for each partner
+
 ## Quick reference
 
 Build application

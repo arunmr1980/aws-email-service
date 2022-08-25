@@ -2,6 +2,7 @@
 import boto3
 import json
 import copy
+import os
 from http import HTTPStatus
 
 from . import ESLogger as eslogger
@@ -12,6 +13,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 
+bucket_name = os.getenv('ATTACHMENT_S3_BUCKET')
 
 CHARSET = "UTF-8"
 
@@ -31,7 +33,7 @@ def send_email_individually(email_dict):
             
             # Catch error condition when file could not be loaded
             try:
-                attch_file_content = file_reader.get_attachment_file_as_binary(folder_name, file_name)
+                attch_file_content = file_reader.get_file_as_binary(bucket_name, folder_name, file_name)
                 attch = {
                             'name': attachment['name'],
                             'file': attch_file_content

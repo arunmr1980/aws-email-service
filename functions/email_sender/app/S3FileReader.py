@@ -1,13 +1,10 @@
 import boto3
-import os
 from . import ESLogger as eslogger
 
 s3 = boto3.client('s3')
 
-bucket_name = os.getenv('ATTACHMENT_S3_BUCKET') 
-
-def get_attachment_file_as_binary(folder_name, file_name):
-    file_identifier = str(folder_name) + '/' + str(file_name)
+def get_file_as_binary(bucket_name, folder_name, file_name):
+    file_identifier = get_file_identifier(folder_name, file_name)
     eslogger.debug('loading file from S3 - ' + str(bucket_name) + ' :  ' + file_identifier)
 
     with open('/tmp/'+file_name, 'wb') as output_file:
@@ -22,3 +19,21 @@ def get_attachment_file_as_binary(folder_name, file_name):
             raise
 
 
+def get_file_as_text(bucket_name, folder_name, file_name):
+    file_identifier = get_file_identifier(folder_name, file_name)
+    s3_response = s3.get_object(Bucket=bucket_name, Key=file_identifier)
+    txt_response = s3_response['Body'].read()
+    return txt_response
+
+
+
+def get_file_identifier(folder_name, file_name):
+    if file_name is None:
+        raise Exception("File name can not be None")
+    file_identifier = None
+    if folder_name is None:
+        file_identifier = file_name
+    else:
+        file_identifier = folder_name + '/' + file_name
+
+    return file_identifier
