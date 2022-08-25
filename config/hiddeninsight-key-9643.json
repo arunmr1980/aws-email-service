@@ -9,6 +9,13 @@
 			"name": "mountlitera",
 			"client_key": "mountlitera-key-1238",
 			"s3_folder_name": "mountlitera"
+		},
+		{
+			"name": "greenchalk-public-school",
+			"client_key": "greenchalkps-key-8528",
+			"s3_folder_name": "gcps",
+			"s3_bucket_name": "ygiuhiuhiujijioji"
 		}
+
 	]
 }
