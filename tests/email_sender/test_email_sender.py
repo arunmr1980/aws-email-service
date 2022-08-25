@@ -11,6 +11,12 @@ class EmailAttachemntSenderTest(unittest.TestCase):
         email_request = self.get_email_request()
         attachments = self.get_attachments()
 
+        """ send_email_with_attachments method expect addresses as string array. Hence the transformation below """
+        to_addresses_array = []
+        for to_address in email_request['to_addresses']:
+            to_addresses_array.append(to_address['email'])
+        email_request['to_addresses'] = to_addresses_array
+
         response = email_sender.send_email_with_attachments(email_request, attachments)
         self.assertEqual(200, response['statusCode'])
 

@@ -46,7 +46,7 @@ def send_email_individually(email_dict):
 
     for to_address in email_dict["to_addresses"]:
         email_dict2 = copy.deepcopy(email_dict)
-        email_dict2["to_addresses"] = [to_address]
+        email_dict2["to_addresses"] = [to_address['email']]
         if has_attachment:
             responses.append(send_email_with_attachments(email_dict2, attachment_files))
         else:
