@@ -1,0 +1,21 @@
+
+
+{
+  "partner_key": "hiddeninsight-key-9643",
+  "client_key": "mountlitera-key-1238",
+  "from": "arun_mr549e@protonmail.com",
+  "to_addresses": [{"email":"merry.arun@gmail.com"}, {"email":"strider.galaxies@gmail.com"}, {"email":"arun.mr@hiddeninsight.in"}],
+  "title": "Email Service Test [Attachment Test from Lambda] HI",
+  "body_html": "<p>Blah Blah</p>",
+  "body_text": "Blah Blah",
+  "attachments":[
+    {
+      "name": "bob.jpg",
+      "file_key": "boy4.jpg"
+    },
+    {
+      "name": "susie.jpg",
+      "file_key": "girl1.jpg"
+    }
+  ]
+}
