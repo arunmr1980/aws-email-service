@@ -23,7 +23,8 @@ def get_attachment_files_config(partner_key, client_key):
     else:
         for client in partner_config['clients']:
             if client['client_key'] == client_key:
-                folder_name = client['s3_folder_name']
+                if 's3_folder_name' in client:
+                    folder_name = client['s3_folder_name']
                 if 's3_bucket_name' in client:
                     bucket_name = client['s3_bucket_name']
                 else:

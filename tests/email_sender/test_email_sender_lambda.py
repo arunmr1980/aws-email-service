@@ -24,6 +24,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
         for response in responses:
             self.assertEqual(200, response['statusCode'])
 
+
     """Successful email sending with attachment with client - Attachment bucket owned"""
     def test_email_sender_success_with_attachment_client_owned_bucket(self):
         sender_event = self.get_success_event_with_attachment_client_owned_bucket()
@@ -34,6 +35,15 @@ class EmailSenderLambdaTest(unittest.TestCase):
             self.assertEqual(200, response['statusCode'])
 
  
+    """Successful email sending with attachment with client - Attachment bucket owned, files in root"""
+    def test_email_sender_success_with_attachment_client_owned_bucket_no_folder(self):
+        sender_event = self.get_success_event_with_attachment_client_owned_bucket_no_folder()
+        context = None
+
+        responses = email_sender.handle_event(sender_event, context)
+        for response in responses:
+            self.assertEqual(200, response['statusCode'])
+
  
     """Email sending with attachment file loading fail"""
     def test_email_sender_success_with_attachment_fail(self):
@@ -103,6 +113,10 @@ class EmailSenderLambdaTest(unittest.TestCase):
 
     def get_success_event_with_attachment_client_owned_bucket(self):
         return self.get_event('events/event_email_sender_fn_attachment_client_owned_bucket.json')
+
+
+    def get_success_event_with_attachment_client_owned_bucket_no_folder(self):
+        return self.get_event('events/event_email_sender_fn_attachment_client_owned_bucket_no_folder.json')
 
 
     def get_success_event_with_attachment_fail(self):

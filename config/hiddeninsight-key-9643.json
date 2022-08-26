@@ -15,6 +15,11 @@
 			"client_key": "greenchalkps-key-8528",
 			"s3_folder_name": "gcps",
 			"s3_bucket_name": "greenchalkps-emails"
+		},
+		{
+			"name": "Jackfruit House",
+			"client_key": "jackfruithouse-key-4261",
+			"s3_bucket_name": "jackfruithouse-emails"
 		}
 
 	]

@@ -31,6 +31,10 @@ class PartnerConfigUtilTest(unittest.TestCase):
 
         """Case 3 - Client has own bucket and folder"""
         files_config = config_util.get_attachment_files_config(partner_key, "greenchalkps-key-8528")
-        self.assertEqual("ygiuhiuhiujijioji", files_config['bucket_name'])
+        self.assertEqual("greenchalkps-emails", files_config['bucket_name'])
         self.assertEqual("gcps", files_config['folder_name'])
 
+        """Case 4 - Client has own bucket but no folder"""
+        files_config = config_util.get_attachment_files_config(partner_key, "jackfruithouse-key-4261")
+        self.assertEqual("jackfruithouse-emails", files_config['bucket_name'])
+        self.assertEqual(None, files_config['folder_name'])
