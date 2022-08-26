@@ -21,6 +21,7 @@ def get_file_as_binary(bucket_name, folder_name, file_name):
 
 def get_file_as_text(bucket_name, folder_name, file_name):
     file_identifier = get_file_identifier(folder_name, file_name)
+    eslogger.debug('loading file from S3 - ' + str(bucket_name) + ' :  ' + file_identifier)
     s3_response = s3.get_object(Bucket=bucket_name, Key=file_identifier)
     txt_response = s3_response['Body'].read()
     return txt_response

@@ -7,13 +7,14 @@ from http import HTTPStatus
 
 from . import ESLogger as eslogger
 from . import S3FileReader as file_reader
+from . import PartnerConfigUtil as config_util
 from botocore.exceptions import ClientError
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 
-bucket_name = os.getenv('ATTACHMENT_S3_BUCKET')
+#bucket_name = os.getenv('ATTACHMENT_S3_BUCKET')
 
 CHARSET = "UTF-8"
 
@@ -23,40 +24,22 @@ client = boto3.client('ses')
 def send_email_individually(email_dict):
     responses = []
 
-    has_attachment = False
     attachment_files = []
     if "attachments" in email_dict and len(email_dict["attachments"]) > 0:
-        has_attachment = True
         try:
             attachment_files = get_attachment_files(email_dict)
-        except:
+        except Exception as e:
             eslogger.error('Attachments could not be loaded')
+
+            eslogger.exception(e)
             response = get_internal_server_error_response({'code':'ATTCH_FAIL','message':'Attachments could not be loaded'})
             responses.append(response)
             return responses
-        #for attachment in email_dict["attachments"]:
-         #   folder_name = email_dict["partner_key"]
-          #  file_name = attachment["file_key"]
-            
-            # Catch error condition when file could not be loaded
-           # try:
-            #    attch_file_content = file_reader.get_file_as_binary(bucket_name, folder_name, file_name)
-             #   attch = {
-              #              'name': attachment['name'],
-               #             'file': attch_file_content
-                #        }
-               # attachment_files.append(attch)
-           # except:
-            #    eslogger.error('Attachments could not be loaded')
-             #   response = get_internal_server_error_response({'code':'ATTCH_FAIL','message':'Attachments could not be loaded'})
-              #  responses.append(response)
-               # return responses
-
 
     for to_address in email_dict["to_addresses"]:
         email_dict2 = copy.deepcopy(email_dict)
         email_dict2["to_addresses"] = [to_address['email']]
-        if has_attachment:
+        if len(attachment_files) > 0:
             responses.append(send_email_with_attachments(email_dict2, attachment_files))
         else:
             responses.append(send_email(email_dict2))
@@ -66,8 +49,13 @@ def send_email_individually(email_dict):
 
 def get_attachment_files(email_dict):
     attachment_files = []
+    partner_key = email_dict['partner_key']
+    client_key = None if 'client_key' not in email_dict else email_dict['client_key']
+    partner_config = config_util.get_attachment_files_config(partner_key, client_key)
+    bucket_name = partner_config['bucket_name']
+    folder_name = partner_config['folder_name']
+
     for attachment in email_dict["attachments"]:
-        folder_name = email_dict["partner_key"]
         file_name = attachment["file_key"]
             
         # Catch error condition when file could not be loaded
