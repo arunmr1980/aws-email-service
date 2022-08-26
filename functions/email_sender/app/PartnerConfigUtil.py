@@ -28,6 +28,7 @@ def get_attachment_files_config(partner_key, client_key):
                     bucket_name = client['s3_bucket_name']
                 else:
                     bucket_name = partner_config['s3_bucket_name']
+                break
 
     return {
              "bucket_name": bucket_name,
