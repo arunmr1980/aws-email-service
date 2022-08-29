@@ -3,6 +3,7 @@ import boto3
 import os
 
 from . import ESLogger as eslogger
+from . import request_validator as request_validator
 from botocore.exceptions import ClientError
 
 state_machine_arn = os.getenv('EMAIL_PROCESSOR_STATE_MACHINE_ARN')
@@ -19,9 +20,14 @@ def handle_event(event, context):
         eslogger.info("Body of Message ----" + record['messageId'])
         eslogger.info(record["body"])
         payload = record["body"]
-        stepfn_response = execute_step_function(payload)
-        eslogger.debug("Step function response ")
-        eslogger.debug(stepfn_response)
+        validation_response = request_validator.validate_request(payload)
+        if validation_response['is_valid']:
+            stepfn_response = execute_step_function(payload)
+            eslogger.debug("Step function response ")
+            eslogger.debug(stepfn_response)
+        else:
+            failed_messages.append(record)
+            eslogger.info('Request validation failed ' + validation_response['message'])
 
     response = get_response(failed_messages, batchSize)
     eslogger.info("Response :- ")
