@@ -2,7 +2,8 @@
 
 {
   "from": "arun_mr549e@protonmail.com",
-  "to_addesses": [{"email":"merry.arun@gmail.com"}, {"email":"strider.galaxies@gmail.com"}],
+  "partner_key": "hiddeninsight-key-9643",
+  "to_addresses": [{"email":"merry.arun@gmail.com"}, {"email":"strider.galaxies@gmail.com"},{"email":"arun.mr@hiddeninsight.in"}],
   "title": "Email Service Test [SNS Trigger]",
   "body_html": "<p>Blah Blah</p>",
   "body_text": "Blah Blah"
