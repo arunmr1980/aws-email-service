@@ -14,12 +14,12 @@
 			"name": "greenchalk-public-school",
 			"client_key": "greenchalkps-key-8528",
 			"s3_folder_name": "gcps",
-			"s3_bucket_name": "greenchalkps-emails"
+			"s3_bucket_name": "greenchalkps-emails-7654"
 		},
 		{
 			"name": "Jackfruit House",
 			"client_key": "jackfruithouse-key-4261",
-			"s3_bucket_name": "jackfruithouse-emails"
+			"s3_bucket_name": "jackfruithouse-emails-7654"
 		}
 
 	]

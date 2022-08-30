@@ -2,6 +2,24 @@
 
 ![Email Service - Architecture drawio](https://user-images.githubusercontent.com/19325896/184797164-f3b3f09d-eb74-4808-a36f-eee3089671b9.png)
 
+## Installation and setup
+
+1. Install docker
+2. Install SAM
+3. Build the application
+> sam build --use-container
+4. Deploy the application in AWS
+> sam deploy --guided
+5. Setup env variables. Update shell script with correct valuee.
+> cd setup
+> vi setup_env.sh
+> . setup_env.sh
+6. Setup the initial AWS env to run tests
+> ./init_setup.sh
+7. Run local tests. Note that some tests may need deployed application.
+> python3 -m unittest discover
+8. Run end to end tests
+
 ## Features
 
 - Sends emails in a batch
