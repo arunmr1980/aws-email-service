@@ -1,0 +1,21 @@
+
+
+{
+  "from": "arun_mr549e@protonmail.com",
+  "partner_key": "hiddeninsight-key-9643",
+  "to_addresses": [{"email":"merry.arun@gmail.com"}, {"email":"strider.galaxies@gmail.com"},{"email":"arun.mr@hiddeninsight.in"}],
+  "title": "Email Service Test [SNS Trigger]",
+  "body_html": "<p>Attachments included</p>",
+  "body_text": "Attachements included",
+  "attachments":[
+    {
+      "name": "bob.jpg",
+      "file_key": "boy4.jpg"
+    },
+    {
+      "name": "susie.jpg",
+      "file_key": "girl1.jpg"
+    }
+  ]
+
+}

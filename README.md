@@ -20,7 +20,9 @@
 > ./init_setup.sh
 7. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
 > python3 -m unittest discover
-8. Run end to end tests
+8. Run end to end tests. Test emails and emails with attachments.
+> python3 -m tests.e2e.sns_test
+9. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
 
 ## Features
 

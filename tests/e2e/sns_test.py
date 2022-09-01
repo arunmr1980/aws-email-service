@@ -10,6 +10,7 @@ sns = boto3.client("sns")
 
 
 MAIL_COUNT = 1
+MAIL_COUNT_ATTACHMENT = 2
 
 def send_email(email_text):
 
@@ -24,10 +25,18 @@ def send_email(email_text):
 
 
 def test_emails():
-    index = 0
-
     email_request = get_sns_event()
-    while index < MAIL_COUNT:
+    send_emails(email_request, MAIL_COUNT)
+
+
+def test_emails_attachment():
+    email_request = get_sns_event_attachment()
+    send_emails(email_request, MAIL_COUNT_ATTACHMENT)
+
+
+def send_emails(email_request, count):
+    index = 0
+    while index < count:
         random_str = get_random_string()
         index = index + 1
         email_request['title'] = "[" + str(index) + "]" + random_str + " Email Service Test"
@@ -38,6 +47,10 @@ def test_emails():
 def get_random_string():
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(10))
+
+
+def get_sns_event_attachment():
+    return get_event('events/event_sns_attachments.json')
 
 
 def get_sns_event():
@@ -51,4 +64,4 @@ def get_event(file_name) :
 
 
 test_emails()
-
+test_emails_attachment()
