@@ -1,2 +1,3 @@
-export ATTACHMENT_S3_BUCKET=email-app-attachmentsbucket-5c4l0y3hobmw
-export EMAIL_PROCESSOR_STATE_MACHINE_ARN=arn:aws:states:us-east-2:107569227309:stateMachine:EmailProcessingStateMachine-jBqUdf3hg7FJ
+export ATTACHMENT_S3_BUCKET=email-app-attachmentsbucket-lolf8zbjv9a0
+export EMAIL_PROCESSOR_STATE_MACHINE_ARN=arn:aws:states:us-west-2:272936841180:stateMachine:EmailProcessingStateMachine-zAMPhE7O5niB
+export BUCKET_SUFFIX=6542
