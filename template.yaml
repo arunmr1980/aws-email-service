@@ -50,12 +50,13 @@ Resources:
       CodeUri: functions/email_sender/
       Handler: app.email_sender_lambda.handle_event
       Runtime: python3.9
+      Timeout: 30
       Policies:
         - AmazonSESFullAccess
         - AmazonS3ReadOnlyAccess
       Environment:
         Variables:
-          ATTACHMENT_S3_BUCKET: 'email-app-attachmentsbucket-5c4l0y3hobmw'
+          ATTACHMENT_S3_BUCKET: 'email-app-attachmentsbucket-lolf8zbjv9a0'
 
 
   AttachmentsBucket:
