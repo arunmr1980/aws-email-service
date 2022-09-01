@@ -4,19 +4,21 @@
 
 ## Installation and setup
 
-1. Install docker
-2. Install SAM
+1. Install docker(https://docs.docker.com/engine/install/ubuntu/)
+2. Install SAM (https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 3. Build the application
 > sam build --use-container
-4. Deploy the application in AWS
+4. Deploy the application in AWS. AWS user needs all required permissions.
 > sam deploy --guided
-5. Setup env variables. Update shell script with correct valuee.
+5. Setup env variables. Update env_setup.sh with correct valuee.
 > cd setup
-> vi setup_env.sh
-> . setup_env.sh
-6. Setup the initial AWS env to run tests
+
+> vi env_setup.sh
+
+> . env_setup.sh
+6. Setup the initial AWS env to run tests. Bucket creation may file if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file
 > ./init_setup.sh
-7. Run local tests. Note that some tests may need deployed application.
+7. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
 > python3 -m unittest discover
 8. Run end to end tests
 
