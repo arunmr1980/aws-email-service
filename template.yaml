@@ -38,7 +38,7 @@ Resources:
       DefinitionUri: statemachine/emailprocessor.asl.json
       DefinitionSubstitutions:
         EmailSenderFunctionArn: !GetAtt EmailSenderFunction.Arn
-      Type: STANDARD
+      Type: EXPRESS
       Policies:
         - LambdaInvokePolicy: 
             FunctionName: !Ref EmailSenderFunction
