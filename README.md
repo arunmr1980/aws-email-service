@@ -18,11 +18,12 @@
 > . env_setup.sh
 6. Setup the initial AWS env to run tests. Bucket creation may file if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file
 > ./init_setup.sh
-7. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
+7. Update the config file to use correct bucket names
+8. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
 > python3 -m unittest discover
-8. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
+9. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
 > python3 -m tests.e2e.sns_test
-9. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
+10. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
 
 ## Features
 
