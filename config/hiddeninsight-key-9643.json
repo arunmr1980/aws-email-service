@@ -2,7 +2,7 @@
 {
 	"name": "HiddenInsight",
 	"partner_key":"hiddeninsight-key-9643",
-	"s3_bucket_name": "email-app-attachmentsbucket-lolf8zbjv9a0",
+	"s3_bucket_name": "email-app-attachmentsbucket-1ejmf5a42pyiq",
 	"s3_folder_name": "hiddeninsight",
 	"clients": [
 		{
