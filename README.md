@@ -10,20 +10,25 @@
 > sam build --use-container
 4. Deploy the application in AWS. AWS user needs all required permissions.
 > sam deploy --guided
-5. Setup env variables. Update env_setup.sh with correct valuee.
+
+## Running tests
+
+Run unit tests, integration tests and end to end tests. This will make sure that everything is setup correctly.
+
+1. Setup env variables. Update env_setup.sh with correct values.
 > cd setup
 
 > vi env_setup.sh
 
 > . env_setup.sh
-6. Setup the initial AWS env to run tests. Bucket creation may file if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file
+2. Update the partner config file. It is in config folder named as [partner_ket].json. Bucket creation may fail if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file.
+3. Setup the initial AWS env to run tests
 > ./init_setup.sh
-7. Update the config file to use correct bucket names
-8. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
+4. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
 > python3 -m unittest discover
-9. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
+5. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
 > python3 -m tests.e2e.sns_test
-10. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
+6. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
 
 ## Features
 
