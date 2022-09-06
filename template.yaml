@@ -55,7 +55,8 @@ Resources:
         - AmazonS3ReadOnlyAccess
       Environment:
         Variables:
-          ATTACHMENT_S3_BUCKET: 'email-app-attachmentsbucket-5c4l0y3hobmw'
+          #ATTACHMENT_S3_BUCKET: 'email-app-2-attachmentsbucket-11jkzpb0hy005'
+          ATTACHMENT_S3_BUCKET: !Ref AttachmentsBucket
 
 
   AttachmentsBucket:
