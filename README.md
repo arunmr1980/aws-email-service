@@ -21,10 +21,10 @@ Run unit tests, integration tests and end to end tests. This will make sure that
 > vi env_setup.sh
 
 > . env_setup.sh
-2. Update the partner config file. It is in config folder named as [partner_ket].json. Bucket creation may fail if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file.
+2. Update the partner config file. It is in config folder named as [partner_key].json. Bucket creation may fail if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file.
 3. Setup the initial AWS env to run tests
 > ./init_setup.sh
-4. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
+4. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified. NOTE: The environment variables in the shell you run tests from must be correct. It may be necessary to run env_setup.sh from the shell for a fresh setup.
 > python3 -m unittest discover
 5. Update the environment variable ATTACHMENT_S3_BUCKET in email sender lambda to the correct created bucket name. You may also want to update that in templaye.yml to avoid repeated updations on deployed lambda.
 5. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
