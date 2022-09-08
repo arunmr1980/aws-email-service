@@ -17,8 +17,10 @@ class EmailAttachemntSenderTest(unittest.TestCase):
             to_addresses_array.append(to_address['email'])
         email_request['to_addresses'] = to_addresses_array
 
+        """ This method only returns a single response """
         response = email_sender.send_email_with_attachments(email_request, attachments)
         self.assertEqual(200, response['statusCode'])
+        self.assertEqual(3, len(response['body']['emails']))
 
     
     def test_email_sender_success_attachments_s3(self):
@@ -27,6 +29,7 @@ class EmailAttachemntSenderTest(unittest.TestCase):
         responses = email_sender.send_email_individually(email_request)
         for response in responses:
             self.assertEqual(200, response['statusCode'])
+            self.assertEqual(1, len(response['body']['emails']))
 
     
     def get_email_request(self):
