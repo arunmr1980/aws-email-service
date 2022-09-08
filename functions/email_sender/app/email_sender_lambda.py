@@ -16,20 +16,43 @@ def handle_event(event, context):
     except ClientError as e:
         eslogger.error(e)
 
-
-    # response = get_response(failed_messages)
-    eslogger.info("Response :- ")
+   # for response in responses:
+   #     if response['statusCode'] != 200:
+   #         raise Exception('One or more failures')
+    
+    eslogger.info("Email Sender Response :- ")
     eslogger.info(responses)
-    return responses
+
+    response = get_response(responses, event)
+    eslogger.info("Transformed Response :- ")
+    eslogger.info(response)
+
+    return response
 
 
-# def get_response(failed_messages):
-#     response = {
-#         'statusCode': 200
-#     }
-#     if len(failed_messages) > 0:
-#         batch_items = []
-#         for msg in failed_messages:
-#             batch_items.append({"itemIdentifier": msg["messageId"]})
-#         response["batchItemFailures"] = batch_items
-#     return response
+def get_response(em_responses, event):
+    for em_response in em_responses:
+        eslogger.debug('Email Response ------')
+        eslogger.debug(em_response)
+        for email in em_response['body']['emails']:
+            to_address = get_to_address(event, email)
+            if em_response['statusCode'] == 200:
+                to_address['is_sent'] = True
+            else:
+                to_address['is_sent'] = False
+                if 'failures' not in to_address:
+                    to_address['failures'] = []
+                failure = {
+                            'code':em_response['body']['code'],
+                            'message': em_response['body']['message']
+                        }
+                to_address['failures'].append(failure)
+
+    return event
+
+
+def get_to_address(event, email):
+    for to_address in event['to_addresses']:
+        if to_address['email'] == email:
+            return to_address
+
