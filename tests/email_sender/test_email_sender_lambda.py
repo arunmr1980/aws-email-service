@@ -6,7 +6,7 @@ import functions.email_sender.app.email_sender_lambda as email_sender
 class EmailSenderLambdaTest(unittest.TestCase):
 
     """Successful email sending with attachment"""
-    def est_email_sender_success_with_attachment(self):
+    def test_email_sender_success_with_attachment(self):
         sender_event = self.get_success_event_with_attachment()
         context = None
 
@@ -15,7 +15,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
 
     
     """Successful email sending with attachment with client - Attachment bucket shared"""
-    def est_email_sender_success_with_attachment_client(self):
+    def test_email_sender_success_with_attachment_client(self):
         sender_event = self.get_success_event_with_attachment_client()
         context = None
 
@@ -24,7 +24,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
 
 
     """Successful email sending with attachment with client - Attachment bucket owned"""
-    def est_email_sender_success_with_attachment_client_owned_bucket(self):
+    def test_email_sender_success_with_attachment_client_owned_bucket(self):
         sender_event = self.get_success_event_with_attachment_client_owned_bucket()
         context = None
 
@@ -33,7 +33,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
 
  
     """Successful email sending with attachment with client - Attachment bucket owned, files in root"""
-    def est_email_sender_success_with_attachment_client_owned_bucket_no_folder(self):
+    def test_email_sender_success_with_attachment_client_owned_bucket_no_folder(self):
         sender_event = self.get_success_event_with_attachment_client_owned_bucket_no_folder()
         context = None
 
@@ -42,7 +42,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
 
  
     """Email sending with attachment file loading fail"""
-    def est_email_sender_success_with_attachment_fail(self):
+    def test_email_sender_success_with_attachment_fail(self):
         sender_event = self.get_success_event_with_attachment_fail()
         context = None
 
@@ -51,7 +51,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
 
 
     """Successful email sending"""
-    def est_email_sender_success(self):
+    def test_email_sender_success(self):
         sender_event = self.get_success_event()
         context = None
 
@@ -67,7 +67,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
         self.validate_response(response, exp_success_count=0, exp_fail_count=3)
 
 
-    def est_email_sender_partial_fail(self):
+    def test_email_sender_partial_fail(self):
         sender_event = self.get_partial_failure_event()
         context = None
 
