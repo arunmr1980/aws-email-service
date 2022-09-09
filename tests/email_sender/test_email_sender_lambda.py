@@ -96,6 +96,7 @@ class EmailSenderLambdaTest(unittest.TestCase):
         for failure in failures:
             self.assertTrue('code' in failure and failure['code'] is not None)
             self.assertTrue('message' in failure and failure['message'] is not None)
+            self.assertTrue('timestamp' in failure and failure['timestamp'] is not None)
 
 
 

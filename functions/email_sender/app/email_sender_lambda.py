@@ -44,7 +44,8 @@ def get_response(em_responses, event):
                     to_address['failures'] = []
                 failure = {
                             'code':em_response['body']['code'],
-                            'message': em_response['body']['message']
+                            'message': em_response['body']['message'],
+                            'timestamp': em_response['body']['timestamp']
                         }
                 to_address['failures'].append(failure)
 

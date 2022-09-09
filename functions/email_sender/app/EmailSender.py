@@ -193,8 +193,9 @@ def get_error_response(ses_response, emails):
             "message": ses_response['Error']['Message'],
             "code": ses_response['Error']['Code'],
             "type": ses_response['Error']['Type'],
+            "timestamp": ses_response['ResponseMetadata']['HTTPHeaders']['date'],
             "emails": emails
-        },
+        }
     }
     return response
 
