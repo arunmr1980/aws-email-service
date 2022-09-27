@@ -10,9 +10,9 @@ def handle_event(event, context):
     eslogger.info("Received Event --------")
     eslogger.info(event)
 
-    responses = []
+    response = {}
     try:
-        responses = response_processor.process_response(event)
+        response = response_processor.process_response(event)
     except ClientError as e:
         eslogger.error(e)
 

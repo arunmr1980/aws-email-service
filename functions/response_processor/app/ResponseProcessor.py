@@ -1,4 +1,5 @@
 import os
+import json
 
 from . import ESLogger as eslogger
 from . import SQSQueueUtil as sqsQueueUtil
@@ -13,12 +14,14 @@ DLQ_NAME = os.getenv('DLQ_NAME')
 
 def process_response(response):
     status = get_response_status(response)
+    queue_message_body = json.dumps(response);
+    eslogger.debug(queue_message_body)
     if status == 'FAILURE_RECOVERABLE':
         eslogger.info("Failures are recoverable and max attempts not exceeded. Sending to queue for processing")
-        sqsQueuUtil.send_to_queue(EMAIL_QUEUE_NAME, response)
+        sqsQueueUtil.send_to_queue(EMAIL_QUEUE_NAME, queue_message_body)
     elif status == 'FAILURE_PERMANENT':
         eslogger.info("Can not recover from failures. Moving to DLQ")
-        sqsQueuUtil.send_to_queue(DLQ_NAME, response)
+        sqsQueueUtil.send_to_queue(DLQ_NAME, queue_message_body)
     else:
         eslogger.info("All emails sent successfully")
     return response
