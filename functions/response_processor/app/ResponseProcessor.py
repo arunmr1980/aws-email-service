@@ -15,7 +15,6 @@ DLQ_NAME = os.getenv('DLQ_NAME')
 def process_response(response):
     status = get_response_status(response)
     queue_message_body = json.dumps(response);
-    eslogger.debug(queue_message_body)
     if status == 'FAILURE_RECOVERABLE':
         eslogger.info("Failures are recoverable and max attempts not exceeded. Sending to queue for processing")
         sqsQueueUtil.send_to_queue(EMAIL_QUEUE_NAME, queue_message_body)
@@ -30,8 +29,6 @@ def process_response(response):
 
 def get_response_status(response):
     result = analyze_response(response)
-    eslogger.debug('result:-')
-    eslogger.debug(result)
     response_status = None
 
     if result['recoverable_failures_count'] == 0 and result['non_recoverable_failures_count'] == 0:
@@ -68,10 +65,8 @@ def analyze_response(response):
             if 'recoverable' in to_address:
                 if to_address['recoverable'] is True:
                     recoverable_failures = recoverable_failures + 1
-                    eslogger.debug('++ recoverable')
                 elif to_address['recoverable'] is False:
                     non_recoverable_failures = non_recoverable_failures + 1
-                    eslogger.debug('++ nonrecoverable')
             #The largest failure size is set as retry attempt
             if 'failures' in to_address and len(to_address['failures']) > retry_attempts:
                 retry_attempts = len(to_address['failures'])
