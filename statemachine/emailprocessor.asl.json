@@ -9,13 +9,23 @@
         "Send Email":{
             "Type": "Task",
             "Resource": "arn:aws:states:::lambda:invoke",
-            "OutputPath": "$",
+            "OutputPath": "$.Payload",
             "Parameters": {
                 "Payload.$": "$",
                 "FunctionName": "${EmailSenderFunctionArn}"
             },
-            "Next": "Finish"
+            "Next": "ProcessResponse"
         },
+	"ProcessResponse":{
+	    "Type": "Task",
+	    "Resource": "arn:aws:states:::lambda:invoke",
+	    "OutputPath": "$",
+	    "Parameters": {
+	    	"Payload.$": "$",
+		"FunctionName": "${ResponseProcessorFunctionArn}"
+	    },
+            "Next": "Finish"
+	},
         "Finish":{
             "Type": "Pass",
             "End": true

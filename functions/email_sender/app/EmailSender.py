@@ -3,6 +3,7 @@ import boto3
 import json
 import copy
 import os
+import datetime
 from http import HTTPStatus
 
 from . import ESLogger as eslogger
@@ -25,7 +26,7 @@ def send_email_individually(email_dict):
     responses = []
 
     attachment_files = []
-    to_emails_arr = get_as_email_arr(email_dict["to_addresses"])
+    to_emails_arr = get_sendable_email_arr(email_dict["to_addresses"])
 
     if "attachments" in email_dict and len(email_dict["attachments"]) > 0:
         try:
@@ -50,10 +51,18 @@ def send_email_individually(email_dict):
     return responses
 
 
-def get_as_email_arr(to_addresses):
+def get_sendable_email_arr(to_addresses):
     email_arr = []
     for address in to_addresses:
-        email_arr.append(address["email"])
+        eslogger.debug('address')
+        eslogger.debug(address)
+        if 'is_sent' in address and address['is_sent'] == True:
+            eslogger.info(address['email'] + ' sent successfully in a previous attempt skipping')
+        elif 'recoverable' in address and address['recoverable'] == False:
+            eslogger.info(address['email'] + ' had failed from non recoverable errors in a previous attempt. Skipping')
+        else:
+            eslogger.debug('adding to address')
+            email_arr.append(address["email"])
     return email_arr
 
 
@@ -206,6 +215,7 @@ def get_internal_server_error_response(response, emails):
         "body": {
             "message": response['message'],
             "code": response['code'],
+            "timestamp": str(datetime.datetime.now()),
             "emails": emails
         },
     }

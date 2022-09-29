@@ -13,7 +13,7 @@ logger = logging.getLogger()
 #logger.addHandler(hdlr)
 #--- End Section
 
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 
 def info(msg):
