@@ -54,14 +54,11 @@ def send_email_individually(email_dict):
 def get_sendable_email_arr(to_addresses):
     email_arr = []
     for address in to_addresses:
-        eslogger.debug('address')
-        eslogger.debug(address)
         if 'is_sent' in address and address['is_sent'] == True:
             eslogger.info(address['email'] + ' sent successfully in a previous attempt skipping')
         elif 'recoverable' in address and address['recoverable'] == False:
             eslogger.info(address['email'] + ' had failed from non recoverable errors in a previous attempt. Skipping')
         else:
-            eslogger.debug('adding to address')
             email_arr.append(address["email"])
     return email_arr
 
@@ -125,12 +122,10 @@ def send_email_with_attachments(email_dict, attachment_files):
         )
     except ClientError as e:
         eslogger.error("Error from SES ----")
-        eslogger.error(e.response)
         eslogger.error(e.response['Error']['Message'])
         return get_error_response(e.response, to_addresses)
     else:
-        eslogger.info("Email sent! Message ID:"),
-        eslogger.info(response['MessageId'])
+        eslogger.info("Email sent successfully to " + str(to_addresses)),
         return get_success_response(response, to_addresses)
 
 
@@ -170,16 +165,15 @@ def send_email(email_dict):
             # following line
             # ConfigurationSetName=CONFIGURATION_SET,
         )
-        eslogger.info("Response from SES ---")
-        eslogger.info(response)
+        eslogger.debug("Response from SES ---")
+        eslogger.debug(response)
     except ClientError as e:
         eslogger.error("Error from SES ----")
         eslogger.error(e.response)
         eslogger.error(e.response['Error']['Message'])
         return get_error_response(e.response, email_dict["to_addresses"])
     else:
-        eslogger.info("Email sent! Message ID:"),
-        eslogger.info(response['MessageId'])
+        eslogger.info("Email sent successfully to " + str(email_dict["to_addresses"])),
         return get_success_response(response, email_dict["to_addresses"])
 
 
