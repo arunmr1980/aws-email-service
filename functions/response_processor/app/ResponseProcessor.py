@@ -8,8 +8,8 @@ from . import SQSQueueUtil as sqsQueueUtil
 MAX_RETRY_ATTEMPTS = int(os.getenv('MAX_RETRY_COUNT'))
 RECOVERABLE_ERROR_CODES = ['Throttling']
 
-EMAIL_QUEUE_NAME = os.getenv('EMAIL_QUEUE_NAME')
-DLQ_NAME = os.getenv('DLQ_NAME')
+EMAIL_QUEUE_NAME = os.getenv('EMAIL_SQS_Q')
+DLQ_NAME = os.getenv('EMAIL_SQS_DLQ')
 
 
 def process_response(response):
