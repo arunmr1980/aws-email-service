@@ -4,6 +4,7 @@ import os
 
 from . import ESLogger as eslogger
 from . import request_validator as request_validator
+from . import request_util as request_util
 from botocore.exceptions import ClientError
 
 state_machine_arn = os.getenv('EMAIL_PROCESSOR_STATE_MACHINE_ARN')
@@ -21,8 +22,9 @@ def handle_event(event, context):
         eslogger.info(record["body"])
         payload = record["body"]
         validation_response = request_validator.validate_request(payload)
+        pre_processed_payload = request_util.pre_process_request(payload)
         if validation_response['is_valid']:
-            stepfn_response = execute_step_function(payload)
+            stepfn_response = execute_step_function(pre_processed_payload)
             eslogger.debug("Step function response ")
             eslogger.debug(stepfn_response)
         else:
