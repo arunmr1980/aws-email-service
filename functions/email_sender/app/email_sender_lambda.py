@@ -16,16 +16,10 @@ def handle_event(event, context):
     except ClientError as e:
         eslogger.error(e)
 
-   # for response in responses:
-   #     if response['statusCode'] != 200:
-   #         raise Exception('One or more failures')
-    
     eslogger.info("Email Sender Response :- ")
     eslogger.info(responses)
 
     response = get_response(responses, event)
-    eslogger.info("Transformed Response :- ")
-    eslogger.info(response)
 
     return response
 
