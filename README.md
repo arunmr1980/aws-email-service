@@ -43,8 +43,48 @@ Run unit tests, integration tests and end to end tests. This will make sure that
 
 ## Configurations
 
-- S3 Bucket name
-- Json config file for each partner
+Configuration is done for partners and clients of each partner. Multiple partners may be configured.
+
+### Partner level configuration
+
+There is a configuration file at the root level of application S3 bucket for each partner.
+Here is a sample
+```
+{
+	"name": "HiddenInsight",
+	"partner_key":"hiddeninsight-key-9643",
+	"s3_bucket_name": "email-app-attachmentsbucket-ehxhya82j2tm",
+	"s3_folder_name": "hiddeninsight",
+	"clients": [
+		{
+			"name": "mountlitera",
+			"client_key": "mountlitera-key-1238",
+			"s3_folder_name": "mountlitera"
+		},
+		{
+			"name": "greenchalk-public-school",
+			"client_key": "greenchalkps-key-8528",
+			"s3_folder_name": "gcps",
+			"s3_bucket_name": "greenchalkps-emails-uw8271"
+		},
+		{
+			"name": "Jackfruit House",
+			"client_key": "jackfruithouse-key-4261",
+			"s3_bucket_name": "jackfruithouse-emails-uw8271"
+		}
+
+	]
+}
+
+```
+Note that clients of the partner are also configured in this file. Client configuration is optional. 
+
+'s3_folder_name' is the folder where the attachments files are saved. There are multiple ways of configuring it.
+- When client configuration is not available, it is saved in the folder mentioned in root level.
+- Client may keep the attachments in a folder inside the root bucket. See 'mountlitera' configuration in example.
+- Client may keep the attachments in a folder inside specified client s3 bucket. See 'greenchalk-public-school' configuration in example.
+- Client may keep the attachments inside specified client s3 bucket at its root level. See 'Jackfruit House' configuration in example.
+
 
 ## Quick reference
 
