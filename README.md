@@ -21,7 +21,7 @@ Run unit tests, integration tests and end to end tests. This will make sure that
 > vi env_setup.sh
 
 > . env_setup.sh
-2. Update the partner config file. It is in config folder named as [partner_key].json. Bucket creation may fail if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file.
+2. Update the partner config file. It is in config folder named as [partner_key].json. Update partner and client S3 bucket names if they have changed. 
 3. Setup the initial AWS env to run tests
 > ./init_setup.sh
 4. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified. NOTE: The environment variables in the shell you run tests from must be correct. It may be necessary to run env_setup.sh from the shell for a fresh setup.
