@@ -38,10 +38,14 @@ Resources:
       DefinitionUri: statemachine/emailprocessor.asl.json
       DefinitionSubstitutions:
         EmailSenderFunctionArn: !GetAtt EmailSenderFunction.Arn
-      Type: EXPRESS
+        ResponseProcessorFunctionArn: !GetAtt ResponseProcessorFunction.Arn
+      Type: STANDARD
       Policies:
         - LambdaInvokePolicy: 
             FunctionName: !Ref EmailSenderFunction
+        - LambdaInvokePolicy: 
+            FunctionName: !Ref ResponseProcessorFunction
+
 
 
   EmailSenderFunction:
@@ -56,7 +60,22 @@ Resources:
         - AmazonS3ReadOnlyAccess
       Environment:
         Variables:
-          ATTACHMENT_S3_BUCKET: 'email-app-attachmentsbucket-1ejmf5a42pyiq'
+          ATTACHMENT_S3_BUCKET: !Ref AttachmentsBucket
+
+
+  ResponseProcessorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/response_processor/
+      Handler: app.response_processor_lambda.handle_event
+      Runtime: python3.9
+      Policies:
+        - AmazonSQSFullAccess
+      Environment:
+        Variables:
+          MAX_RETRY_COUNT: 3
+          EMAIL_SQS_Q: !GetAtt EmailSqsQueue.QueueName
+          EMAIL_SQS_DLQ: !GetAtt EmailSqsDLQ.QueueName
 
 
   AttachmentsBucket:

@@ -28,6 +28,13 @@ class RequestValidatorTest(unittest.TestCase):
         self.assertEqual(True, response['is_valid'])
 
 
+    def test_request_validator_retry(self):
+        request = self.get_email_request_retry()
+
+        response = request_validator.validate_request(request)
+        self.assertEqual(True, response['is_valid'])
+
+
     def get_email_request_fail(self) :
         return self.get_request('events/event_email_sender_fn_validation_fail.json')
  
@@ -39,6 +46,10 @@ class RequestValidatorTest(unittest.TestCase):
     def get_email_request_with_attachment(self) :
         return self.get_request('events/event_email_sender_fn_attachment_client.json')
  
+
+    def get_email_request_retry(self) :
+        return self.get_request('events/response_processor_failure.json')
+
 
     def get_request(self, file_name) :
         with open( file_name, 'r') as event:

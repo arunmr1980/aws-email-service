@@ -1,0 +1,58 @@
+{
+	"from": "arun_mr549e@protonmail.com", 
+	"partner_key": "hiddeninsight-key-9643", 
+	"to_addresses": [
+		{
+			"email": "merry.arun@gmail.com", 
+			"is_sent": true
+		}, 
+		{
+			"email": "strider.galmmjjjies@gmail.com", 
+			"is_sent": false, 
+			"failures": [
+				{
+					"code": "Throttling", 
+					"message": "Daily message quota exceeded.", 
+					"timestamp": "Fri, 09 Sep 2022 09:09:07 GMT"
+				}
+			]
+		}, 
+		{
+			"email": "strider.galmmjjjjjjies@gmail.com", 
+			"is_sent": false, 
+			"failures": [
+				{
+					"code": "MessageRejected", 
+					"message": "Daily message quota exceeded.", 
+					"timestamp": "Fri, 09 Sep 2022 09:09:07 GMT"
+				}
+			],
+			"recoverable": false
+
+		},
+		{
+			"email": "strdhjhider.galmmjjjies@gmail.com", 
+			"is_sent": false, 
+			"failures": [
+				{
+					"code": "Throttling", 
+					"message": "Daily message quota exceeded.", 
+					"timestamp": "Fri, 09 Sep 2022 09:09:07 GMT"
+				},
+				{
+					"code": "MessageRejected", 
+					"message": "Daily message quota exceeded.", 
+					"timestamp": "Fri, 09 Sep 2022 09:09:07 GMT"
+				}
+			],
+			"recoverable": false
+		},
+		{
+			"email": "arun.mr@hiddeninsight.in", 
+			"is_sent": true
+		}
+	], 
+	"title": "Email Service Test [SNS Trigger] HI", 
+	"body_html": "<p>Blah Blah</p>", 
+	"body_text": "Blah Blah"
+}

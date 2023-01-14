@@ -5,6 +5,12 @@ from . import ESLogger as eslogger
 schema = {
             "type":"object",
             "properties": {
+                "client_ref_transaction_key": {
+                    "type":"string"
+                },
+                "transaction_key": {
+                    "type":"string"
+                },
                 "partner_key": {
                     "type":"string"
                 },

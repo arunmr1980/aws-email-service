@@ -1,0 +1,30 @@
+{
+	"client_ref_transaction_key": "message-9876-987",
+	"transaction_key": "nhy6-o98u-9987",
+	"from": "arun_mr549e@protonmail.com", 
+	"partner_key": "hiddeninsight-key-9643", 
+	"to_addresses": [
+		{
+			"email": "merry.arun@gmail.com", 
+			"is_sent": true
+		}, 
+		{
+			"email": "strider.galmmjjjies@gmail.com", 
+			"is_sent": false, 
+			"failures": [
+				{
+					"code": "MessageRejected", 
+					"message": "Email address is not verified. The following identities failed the check in region US-EAST-2: strider.galmmjjjies@gmail.com", 
+					"timestamp": "Fri, 09 Sep 2022 09:09:07 GMT"
+				}
+			]
+		}, 
+		{
+			"email": "arun.mr@hiddeninsight.in", 
+			"is_sent": true
+		}
+	], 
+	"title": "Email Service Test [SNS Trigger] HI", 
+	"body_html": "<p>Blah Blah</p>", 
+	"body_text": "Blah Blah"
+}

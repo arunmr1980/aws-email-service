@@ -3,6 +3,7 @@ import boto3
 import json
 import copy
 import os
+import datetime
 from http import HTTPStatus
 
 from . import ESLogger as eslogger
@@ -25,6 +26,8 @@ def send_email_individually(email_dict):
     responses = []
 
     attachment_files = []
+    to_emails_arr = get_sendable_email_arr(email_dict["to_addresses"])
+
     if "attachments" in email_dict and len(email_dict["attachments"]) > 0:
         try:
             attachment_files = get_attachment_files(email_dict)
@@ -32,19 +35,32 @@ def send_email_individually(email_dict):
             eslogger.error('Attachments could not be loaded')
 
             eslogger.exception(e)
-            response = get_internal_server_error_response({'code':'ATTCH_FAIL','message':'Attachments could not be loaded'})
+            attch_fail_response = {'code':'ATTCH_FAIL','message':'Attachments could not be loaded'}
+            response = get_internal_server_error_response(attch_fail_response, to_emails_arr)
             responses.append(response)
             return responses
 
-    for to_address in email_dict["to_addresses"]:
+    for to_address in to_emails_arr:
         email_dict2 = copy.deepcopy(email_dict)
-        email_dict2["to_addresses"] = [to_address['email']]
+        email_dict2["to_addresses"] = [to_address]
         if len(attachment_files) > 0:
             responses.append(send_email_with_attachments(email_dict2, attachment_files))
         else:
             responses.append(send_email(email_dict2))
 
     return responses
+
+
+def get_sendable_email_arr(to_addresses):
+    email_arr = []
+    for address in to_addresses:
+        if 'is_sent' in address and address['is_sent'] == True:
+            eslogger.info(address['email'] + ' sent successfully in a previous attempt skipping')
+        elif 'recoverable' in address and address['recoverable'] == False:
+            eslogger.info(address['email'] + ' had failed from non recoverable errors in a previous attempt. Skipping')
+        else:
+            email_arr.append(address["email"])
+    return email_arr
 
 
 def get_attachment_files(email_dict):
@@ -106,13 +122,11 @@ def send_email_with_attachments(email_dict, attachment_files):
         )
     except ClientError as e:
         eslogger.error("Error from SES ----")
-        eslogger.error(e.response)
         eslogger.error(e.response['Error']['Message'])
-        return get_error_response(e.response)
+        return get_error_response(e.response, to_addresses)
     else:
-        eslogger.info("Email sent! Message ID:"),
-        eslogger.info(response['MessageId'])
-        return get_success_response(response)
+        eslogger.info("Email sent successfully to " + str(to_addresses)),
+        return get_success_response(response, to_addresses)
 
 
 def add_attachments(attachment_files, message):
@@ -151,48 +165,52 @@ def send_email(email_dict):
             # following line
             # ConfigurationSetName=CONFIGURATION_SET,
         )
-        eslogger.info("Response from SES ---")
-        eslogger.info(response)
+        eslogger.debug("Response from SES ---")
+        eslogger.debug(response)
     except ClientError as e:
         eslogger.error("Error from SES ----")
         eslogger.error(e.response)
         eslogger.error(e.response['Error']['Message'])
-        return get_error_response(e.response)
+        return get_error_response(e.response, email_dict["to_addresses"])
     else:
-        eslogger.info("Email sent! Message ID:"),
-        eslogger.info(response['MessageId'])
-        return get_success_response(response)
+        eslogger.info("Email sent successfully to " + str(email_dict["to_addresses"])),
+        return get_success_response(response, email_dict["to_addresses"])
 
 
-def get_success_response(ses_response):
+def get_success_response(ses_response, emails):
     response = {
         "statusCode": ses_response['ResponseMetadata']['HTTPStatusCode'],
-        "body": json.dumps({
+        "body": {
             "message": "success",
-            "messageId": ses_response['MessageId']
-        }),
+            "messageId": ses_response['MessageId'],
+            "emails": emails 
+        },
     }
     return response
 
 
-def get_error_response(ses_response):
+def get_error_response(ses_response, emails):
     response = {
         "statusCode": ses_response['ResponseMetadata']['HTTPStatusCode'],
-        "body": json.dumps({
+        "body": {
             "message": ses_response['Error']['Message'],
             "code": ses_response['Error']['Code'],
-            "type": ses_response['Error']['Type']
-        }),
+            "type": ses_response['Error']['Type'],
+            "timestamp": ses_response['ResponseMetadata']['HTTPHeaders']['date'],
+            "emails": emails
+        }
     }
     return response
 
 
-def get_internal_server_error_response(response):
+def get_internal_server_error_response(response, emails):
     response = {
         "statusCode": HTTPStatus.INTERNAL_SERVER_ERROR,
-        "body": json.dumps({
+        "body": {
             "message": response['message'],
             "code": response['code'],
-        }),
+            "timestamp": str(datetime.datetime.now()),
+            "emails": emails
+        },
     }
     return response

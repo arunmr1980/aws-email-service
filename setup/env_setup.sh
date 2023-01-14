@@ -1,4 +1,8 @@
-export ATTACHMENT_S3_BUCKET=email-app-attachmentsbucket-1ejmf5a42pyiq
-export EMAIL_PROCESSOR_STATE_MACHINE_ARN=arn:aws:states:us-west-2:272936841180:stateMachine:EmailProcessingStateMachine-osSpHHyttQns
+export ATTACHMENT_S3_BUCKET=
+export EMAIL_PROCESSOR_STATE_MACHINE_ARN=
 export BUCKET_SUFFIX=6542
-export SNS_TOPIC_ARN=arn:aws:sns:us-west-2:272936841180:EmailSNSTopic.fifo
+export SNS_TOPIC_ARN=
+export MAX_RETRY_COUNT=3
+export EMAIL_SQS_Q=
+export EMAIL_SQS_DLQ=
+

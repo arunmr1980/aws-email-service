@@ -2,6 +2,63 @@
 
 ![Email Service - Architecture drawio](https://user-images.githubusercontent.com/19325896/184797164-f3b3f09d-eb74-4808-a36f-eee3089671b9.png)
 
+## How to use the application?
+
+Once the application is deployed in AWS, client use it by posting a request to SNS
+
+### Request Format
+```
+{
+	"client_ref_transaction_key": "message-9876-987",
+	"transaction_key": "nhy6-o98u-9987",
+	"from": "arun_mr549e@protonmail.com", 
+	"partner_key": "hiddeninsight-key-9643",
+	"client_key": "mountlitera-key-1238",
+	"to_addresses": [
+		{
+			"email": "merry.arun@gmail.com", 
+		}, 
+		{
+			"email": "arun.mr@hiddeninsight.in", 
+		}
+	], 
+	"title": "Email Service Test [SNS Trigger] HI", 
+	"body_html": "<p>Blah Blah</p>", 
+	"body_text": "Blah Blah",
+	"attachments":[
+    		{
+      			"name": "bob.jpg",
+      			"file_key": "boy4.jpg"
+    		},
+    		{
+      			"name": "susie.jpg",
+      			"file_key": "girl1.jpg"
+    		}
+  	]
+
+}
+```
+
+#### Field Definitions
+
+- client_ref_transaction_key: Any reference key client choose to send. This can be used later for retrieving logs or status. Optional
+- transaction_key: A unique transaction key client may want to send to identify this request. Optional
+- from: From address of the email. Required
+- partner_key: Partner key for the partner configuration. Required
+- client_key: Client key in case partner support multiple clients. Optional
+- title: Subject line of the email. Required
+- body_html: Email content as html. Either of body_html or body_text is required
+- body_text: Email content as text. Either of body_html or body_text is required
+- to_addresses: List of to addresses
+- attachments: List of attachments
+
+#### To address fields
+- email: Email address of the recipient. Required
+
+#### Attachment fields
+- name: Name of the attachment file
+- file_key: File key of the file in S3 
+
 ## Installation and setup
 
 1. Install docker(https://docs.docker.com/engine/install/ubuntu/)
@@ -10,20 +67,25 @@
 > sam build --use-container
 4. Deploy the application in AWS. AWS user needs all required permissions.
 > sam deploy --guided
-5. Setup env variables. Update env_setup.sh with correct valuee.
+
+## Running tests
+
+Run unit tests, integration tests and end to end tests. This will make sure that everything is setup correctly.
+
+1. Setup env variables. Update env_setup.sh with correct values.
 > cd setup
 
 > vi env_setup.sh
 
 > . env_setup.sh
-6. Setup the initial AWS env to run tests. Bucket creation may file if the name is not available. In that case update BUCKET_SUFFIX variable in init_setup.sh and update bucket names of clients and the partner bucket_name in [partner_key].json file
+2. Update the partner config file. It is in config folder named as [partner_key].json. Update partner and client S3 bucket names if they have changed. 
+3. Setup the initial AWS env to run tests
 > ./init_setup.sh
-7. Update the config file to use correct bucket names
-8. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified.
+4. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified. NOTE: The environment variables in the shell you run tests from must be correct. It may be necessary to run env_setup.sh from the shell for a fresh setup.
 > python3 -m unittest discover
-9. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
+5. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
 > python3 -m tests.e2e.sns_test
-10. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
+6. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
 
 ## Features
 
@@ -38,8 +100,48 @@
 
 ## Configurations
 
-- S3 Bucket name
-- Json config file for each partner
+Configuration is done for partners and clients of each partner. Multiple partners may be configured.
+
+### Partner level configuration
+
+There is a configuration file at the root level of application S3 bucket for each partner.
+Here is a sample
+```
+{
+	"name": "HiddenInsight",
+	"partner_key":"hiddeninsight-key-9643",
+	"s3_bucket_name": "email-app-attachmentsbucket-ehxhya82j2tm",
+	"s3_folder_name": "hiddeninsight",
+	"clients": [
+		{
+			"name": "mountlitera",
+			"client_key": "mountlitera-key-1238",
+			"s3_folder_name": "mountlitera"
+		},
+		{
+			"name": "greenchalk-public-school",
+			"client_key": "greenchalkps-key-8528",
+			"s3_folder_name": "gcps",
+			"s3_bucket_name": "greenchalkps-emails-uw8271"
+		},
+		{
+			"name": "Jackfruit House",
+			"client_key": "jackfruithouse-key-4261",
+			"s3_bucket_name": "jackfruithouse-emails-uw8271"
+		}
+
+	]
+}
+
+```
+Note that clients of the partner are also configured in this file. Client configuration is optional. 
+
+'s3_folder_name' is the folder where the attachments files are saved. There are multiple ways of configuring it.
+- When client configuration is not available, it is saved in the folder mentioned in root level.
+- Client may keep the attachments in a folder inside the root bucket. See 'mountlitera' configuration in example.
+- Client may keep the attachments in a folder inside specified client s3 bucket. See 'greenchalk-public-school' configuration in example.
+- Client may keep the attachments inside specified client s3 bucket at its root level. See 'Jackfruit House' configuration in example.
+
 
 ## Quick reference
 
@@ -167,6 +269,15 @@ To delete the sample application that you created, use the AWS CLI. Assuming you
 ```bash
 aws cloudformation delete-stack --stack-name email-service
 ```
+
+## useful commands
+
+List cloudformation stacks
+>aws cloudformation list-stacks
+
+Describe the stack
+>aws cloudformation describe-stack-resources --stack-name <STACK_NAME> --query 'StackResources[].{ResourceType:ResourceType,LogicalResourceId:LogicalResourceId, PhysicalResourceId:PhysicalResourceId}' --output table
+
 
 ## Resources
 
