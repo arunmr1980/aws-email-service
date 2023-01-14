@@ -2,7 +2,7 @@
 {
 	"name": "HiddenInsight",
 	"partner_key":"hiddeninsight-key-9643",
-	"s3_bucket_name": "email-app-attachmentsbucket-5c4l0y3hobmw",
+	"s3_bucket_name": "email-app-attachmentsbucket-1ejmf5a42pyiq",
 	"s3_folder_name": "hiddeninsight",
 	"clients": [
 		{
@@ -14,12 +14,12 @@
 			"name": "greenchalk-public-school",
 			"client_key": "greenchalkps-key-8528",
 			"s3_folder_name": "gcps",
-			"s3_bucket_name": "greenchalkps-emails-7654"
+			"s3_bucket_name": "greenchalkps-emails-6542"
 		},
 		{
 			"name": "Jackfruit House",
 			"client_key": "jackfruithouse-key-4261",
-			"s3_bucket_name": "jackfruithouse-emails-7654"
+			"s3_bucket_name": "jackfruithouse-emails-6542"
 		}
 
 	]
