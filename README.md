@@ -39,23 +39,25 @@ Once the application is deployed in AWS, client use it by posting a request to S
 }
 ```
 
-> client_ref_transaction_key: Any reference key client choose to send. This can be used later for retrieving logs or status. Optional
-> transaction_key: A unique transaction key client may want to send to identify this request. Optional
-> from: From address of the email. Required
-> partner_key: Partner key for the partner configuration. Required
-> client_key: Client key in case partner support multiple clients. Optional
-> title: Subject line of the email. Required
-> body_html: Email content as html. Either of body_html or body_text is required
-> body_text: Email content as text. Either of body_html or body_text is required
-> to_addresses: List of to addresses
-> attachments: List of attachments
+#### Field Definitions
+
+- client_ref_transaction_key: Any reference key client choose to send. This can be used later for retrieving logs or status. Optional
+- transaction_key: A unique transaction key client may want to send to identify this request. Optional
+- from: From address of the email. Required
+- partner_key: Partner key for the partner configuration. Required
+- client_key: Client key in case partner support multiple clients. Optional
+- title: Subject line of the email. Required
+- body_html: Email content as html. Either of body_html or body_text is required
+- body_text: Email content as text. Either of body_html or body_text is required
+- to_addresses: List of to addresses
+- attachments: List of attachments
 
 #### To address fields
-> email: Email address of the recipient. Required
+- email: Email address of the recipient. Required
 
 #### Attachment fields
-> name: Name of the attachment file
-> file_key: File key of the file in S3 
+- name: Name of the attachment file
+- file_key: File key of the file in S3 
 
 ## Installation and setup
 
