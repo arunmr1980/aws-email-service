@@ -2,6 +2,61 @@
 
 ![Email Service - Architecture drawio](https://user-images.githubusercontent.com/19325896/184797164-f3b3f09d-eb74-4808-a36f-eee3089671b9.png)
 
+## How to use the application?
+
+Once the application is deployed in AWS, client use it by posting a request to SNS
+
+### Request Format
+```
+{
+	"client_ref_transaction_key": "message-9876-987",
+	"transaction_key": "nhy6-o98u-9987",
+	"from": "arun_mr549e@protonmail.com", 
+	"partner_key": "hiddeninsight-key-9643",
+	"client_key": "mountlitera-key-1238",
+	"to_addresses": [
+		{
+			"email": "merry.arun@gmail.com", 
+		}, 
+		{
+			"email": "arun.mr@hiddeninsight.in", 
+		}
+	], 
+	"title": "Email Service Test [SNS Trigger] HI", 
+	"body_html": "<p>Blah Blah</p>", 
+	"body_text": "Blah Blah",
+	"attachments":[
+    		{
+      			"name": "bob.jpg",
+      			"file_key": "boy4.jpg"
+    		},
+    		{
+      			"name": "susie.jpg",
+      			"file_key": "girl1.jpg"
+    		}
+  	]
+
+}
+```
+
+> client_ref_transaction_key: Any reference key client choose to send. This can be used later for retrieving logs or status. Optional
+> transaction_key: A unique transaction key client may want to send to identify this request. Optional
+> from: From address of the email. Required
+> partner_key: Partner key for the partner configuration. Required
+> client_key: Client key in case partner support multiple clients. Optional
+> title: Subject line of the email. Required
+> body_html: Email content as html. Either of body_html or body_text is required
+> body_text: Email content as text. Either of body_html or body_text is required
+> to_addresses: List of to addresses
+> attachments: List of attachments
+
+#### To address fields
+> email: Email address of the recipient. Required
+
+#### Attachment fields
+> name: Name of the attachment file
+> file_key: File key of the file in S3 
+
 ## Installation and setup
 
 1. Install docker(https://docs.docker.com/engine/install/ubuntu/)
