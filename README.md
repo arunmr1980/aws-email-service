@@ -99,7 +99,7 @@ Run unit tests, integration tests and end to end tests. This will make sure that
 > ./init_setup.sh
 4. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified. NOTE: The environment variables in the shell you run tests from must be correct. It may be necessary to run env_setup.sh from the shell for a fresh setup.
 > python3 -m unittest discover
-5. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
+5. Run end to end tests. Test emails and emails with attachments.
 > python3 -m tests.e2e.sns_test
 6. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
 
