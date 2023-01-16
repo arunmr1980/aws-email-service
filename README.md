@@ -2,6 +2,22 @@
 
 ![Email Service - Architecture drawio](https://user-images.githubusercontent.com/19325896/184797164-f3b3f09d-eb74-4808-a36f-eee3089671b9.png)
 
+## Processing functions
+
+Processing is done by the following
+
+### QueueReaderFunction
+
+This is a lambda function that reads message from the queue, validates the request and invoke the Step function
+
+### EmailProcessingStateMachine
+
+This is a step function that orchestrated the following lambda functions.
+
+- EmailSenderFunction: This function sends the email using SES. If attachments are present it also loads the attachments.
+
+- ResponseProcessorFunction: This function processes the response. It checks if there are failures. If the failures are recoverable, it posts the requests back to the queue. If the failures are permanent, it moves the request to DLQ. It also tracks the number of retry attempts. Requests with more retries than the configured threshold are moved to DLQ as well.
+
 ## How to use the application?
 
 Once the application is deployed in AWS, client use it by posting a request to SNS
