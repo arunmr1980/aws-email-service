@@ -286,13 +286,16 @@ To delete the sample application that you created, use the AWS CLI. Assuming you
 aws cloudformation delete-stack --stack-name email-service
 ```
 
-## useful commands
+## Useful Commands
 
 List cloudformation stacks
 >aws cloudformation list-stacks
 
 Describe the stack
 >aws cloudformation describe-stack-resources --stack-name <STACK_NAME> --query 'StackResources[].{ResourceType:ResourceType,LogicalResourceId:LogicalResourceId, PhysicalResourceId:PhysicalResourceId}' --output table
+
+Remove an S3 bucket for cleanup
+>aws s3 rm s3://<BUCKET NAME> --recursive
 
 
 ## Resources
