@@ -140,21 +140,17 @@ def add_attachments(attachment_files, message):
 
 def send_email(email_dict):
     try:
+        msg_body = {}
+        if 'body_html' in email_dict:
+            msg_body['Html'] = {'Charset': CHARSET, 'Data': email_dict["body_html"]}
+        if 'body_text' in email_dict:
+            msg_body['Text'] = {'Charset': CHARSET, 'Data': email_dict["body_text"]}
         response = client.send_email(
             Destination={
                 'ToAddresses': email_dict["to_addresses"],
             },
             Message={
-                'Body': {
-                    'Html': {
-                        'Charset': CHARSET,
-                        'Data': email_dict["body_html"],
-                    },
-                    'Text': {
-                        'Charset': CHARSET,
-                        'Data': email_dict["body_text"],
-                    },
-                },
+                'Body': msg_body,
                 'Subject': {
                     'Charset': CHARSET,
                     'Data': email_dict["title"],
@@ -165,8 +161,8 @@ def send_email(email_dict):
             # following line
             # ConfigurationSetName=CONFIGURATION_SET,
         )
-        eslogger.debug("Response from SES ---")
-        eslogger.debug(response)
+        eslogger.info("Response from SES ---")
+        eslogger.info(response)
     except ClientError as e:
         eslogger.error("Error from SES ----")
         eslogger.error(e.response)
