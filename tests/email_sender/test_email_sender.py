@@ -35,6 +35,15 @@ class EmailAttachemntSenderTest(unittest.TestCase):
         self.assertEqual(3, len(response['body']['emails']))
 
     
+    def test_email_sender_text_success(self):
+        email_request = self.get_email_request_text_only()
+
+        responses = email_sender.send_email_individually(email_request)
+        for response in responses:
+            self.assertEqual(200, response['statusCode'])
+            self.assertEqual(1, len(response['body']['emails']))
+
+
     def test_email_sender_success_attachments_s3(self):
         email_request = self.get_email_request()
 
@@ -54,6 +63,10 @@ class EmailAttachemntSenderTest(unittest.TestCase):
 
     def get_email_request(self):
         return self.get_file_as_dict(self.fixture_path + '/email_request.json')
+
+    
+    def get_email_request_text_only(self):
+        return self.get_file_as_dict(self.fixture_path + '/email_request_text.json')
 
 
     def get_attachments(self):

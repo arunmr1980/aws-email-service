@@ -2,6 +2,22 @@
 
 ![Email Service - Architecture drawio](https://user-images.githubusercontent.com/19325896/184797164-f3b3f09d-eb74-4808-a36f-eee3089671b9.png)
 
+## Processing functions
+
+Processing is done by the following
+
+### QueueReaderFunction
+
+This is a lambda function that reads message from the queue, validates the request and invoke the Step function
+
+### EmailProcessingStateMachine
+
+This is a step function that orchestrated the following lambda functions.
+
+- EmailSenderFunction: This function sends the email using SES. If attachments are present it also loads the attachments.
+
+- ResponseProcessorFunction: This function processes the response. It checks if there are failures. If the failures are recoverable, it posts the requests back to the queue. If the failures are permanent, it moves the request to DLQ. It also tracks the number of retry attempts. Requests with more retries than the configured threshold are moved to DLQ as well.
+
 ## How to use the application?
 
 Once the application is deployed in AWS, client use it by posting a request to SNS
@@ -83,7 +99,7 @@ Run unit tests, integration tests and end to end tests. This will make sure that
 > ./init_setup.sh
 4. Run local tests. Note that some tests may need deployed application. If using SES in sandbox make sure that test email addresses are verified. NOTE: The environment variables in the shell you run tests from must be correct. It may be necessary to run env_setup.sh from the shell for a fresh setup.
 > python3 -m unittest discover
-5. Run end to end tests. Test emails and emails with attachments. Verify that template.yaml has correct bucket name for environment variable ATTACHMENT_S3_BUCKET
+5. Run end to end tests. Test emails and emails with attachments.
 > python3 -m tests.e2e.sns_test
 6. Load test with same code as step 8. Increase the mail count. Make sure that step functions type is 'EXPRESS' not 'STANDARD'. Running load test with step function type as 'STANDARD' will escalate billing.
 
@@ -270,13 +286,16 @@ To delete the sample application that you created, use the AWS CLI. Assuming you
 aws cloudformation delete-stack --stack-name email-service
 ```
 
-## useful commands
+## Useful Commands
 
 List cloudformation stacks
 >aws cloudformation list-stacks
 
 Describe the stack
 >aws cloudformation describe-stack-resources --stack-name <STACK_NAME> --query 'StackResources[].{ResourceType:ResourceType,LogicalResourceId:LogicalResourceId, PhysicalResourceId:PhysicalResourceId}' --output table
+
+Remove an S3 bucket for cleanup
+>aws s3 rm s3://<BUCKET NAME> --recursive
 
 
 ## Resources
