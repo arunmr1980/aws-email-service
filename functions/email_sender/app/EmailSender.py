@@ -101,12 +101,14 @@ def send_email_with_attachments(email_dict, attachment_files):
     # Create a multipart/alternative child container.
     msg_body = MIMEMultipart('alternative')
 
-    text_body = email_dict["body_text"]
-    html_body = email_dict["body_html"]
-    text_part = MIMEText(text_body.encode(CHARSET), 'plain', CHARSET)
-    html_part = MIMEText(html_body.encode(CHARSET), 'html', CHARSET)
-    msg_body.attach(text_part)
-    msg_body.attach(html_part)
+    if "body_html" in email_dict:
+        html_body = email_dict["body_html"]
+        html_part = MIMEText(html_body.encode(CHARSET), 'html', CHARSET)
+        msg_body.attach(html_part)
+    if "body_text" in email_dict:
+        text_body = email_dict["body_text"]
+        text_part = MIMEText(text_body.encode(CHARSET), 'plain', CHARSET)
+        msg_body.attach(text_part)
 
     msg.attach(msg_body)
     add_attachments(attachment_files,msg)
