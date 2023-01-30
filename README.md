@@ -72,8 +72,8 @@ Once the application is deployed in AWS, client use it by posting a request to S
 - email: Email address of the recipient. Required
 
 #### Attachment fields
-- name: Name of the attachment file
-- file_key: File key of the file in S3 
+- name: Name of the attachment file. Required
+- file_key: File key of the file in S3. Required
 
 ## Installation and setup
 

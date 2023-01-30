@@ -1,0 +1,18 @@
+{
+    "partner_key": "hiddeninsight-key-9643",
+    "from": "arun_mr549e@protonmail.com",
+    "to_addresses": [{"email":"merry.arun@gmail.com"}, {"email":"strider.galaxies@gmail.com"},{"email": "arun.mr@hiddeninsight.in"}],
+    "title": "Email Service Test [Unit Test] - HTML with attachments",
+    "body_html": "<p style='color:red'>This is a html message of red color</p>",
+    "attachments":[
+      {
+        "name": "Bob.jpg",
+        "file_key": "boy4.jpg"
+      },
+      {
+        "name": "Susie.jpg",
+        "file_key": "girl1.jpg"
+      }
+    ]
+  }
+  

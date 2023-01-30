@@ -53,6 +53,24 @@ class EmailAttachemntSenderTest(unittest.TestCase):
             self.assertEqual(1, len(response['body']['emails']))
 
 
+    def test_email_sender_attachments_text_only(self):
+        email_request = self.get_email_request_attachment_text_only()
+
+        responses = email_sender.send_email_individually(email_request)
+        for response in responses:
+            self.assertEqual(200, response['statusCode'])
+            self.assertEqual(1, len(response['body']['emails']))
+
+
+    def test_email_sender_attachments_html_only(self):
+        email_request = self.get_email_request_attachment_html_only()
+
+        responses = email_sender.send_email_individually(email_request)
+        for response in responses:
+            self.assertEqual(200, response['statusCode'])
+            self.assertEqual(1, len(response['body']['emails']))
+
+
     def get_email_request_all(self):
         return self.get_file_as_dict('events/event_email_sender_fn.json')
 
@@ -67,6 +85,14 @@ class EmailAttachemntSenderTest(unittest.TestCase):
     
     def get_email_request_text_only(self):
         return self.get_file_as_dict(self.fixture_path + '/email_request_text.json')
+
+
+    def get_email_request_attachment_text_only(self):
+        return self.get_file_as_dict(self.fixture_path + '/email_request_attachment_text_only.json')
+
+
+    def get_email_request_attachment_html_only(self):
+        return self.get_file_as_dict(self.fixture_path + '/email_request_attachment_html_only.json')
 
 
     def get_attachments(self):
